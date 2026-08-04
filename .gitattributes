@@ -1,0 +1,15 @@
+* text=auto
+
+*.py text eol=lf
+*.md text eol=lf
+*.bat text eol=crlf
+
+# Grim Dawn save/template files are binary assets.
+*.gdc binary
+*.g00 binary
+*.g01 binary
+*.g02 binary
+*.gdd binary
+*.dat binary
+*.fow binary
+*.bak binary
