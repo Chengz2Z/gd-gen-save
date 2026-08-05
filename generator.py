@@ -113,7 +113,7 @@ def _build_ascended_affix_records() -> dict[str, str]:
         "aa17145": "records/items/lootaffixes/ascended/ad318b.dbr",
     })
     if compact_id != 17000 or len(records) != 989:
-        raise RuntimeError("升华词缀映射表构造失败")
+        raise RuntimeError("飞升词缀映射表构造失败")
     return records
 
 
@@ -164,8 +164,10 @@ def _class_tag(masteries: list[str]) -> str:
 
 
 def _seed_rng(build: GrimToolsBuild, character_name: str) -> random.Random:
+    import time
+    timestamp = str(time.time())
     digest = hashlib.sha256(
-        f"{build.build_id}\0{character_name}".encode("utf-8")
+        f"{build.build_id}\0{character_name}\0{timestamp}".encode("utf-8")
     ).digest()
     return random.Random(int.from_bytes(digest[:16], "little"))
 
@@ -178,7 +180,7 @@ def _ascended_affix_record(value: object) -> str:
         return ASCENDED_AFFIX_RECORDS[affix]
     except KeyError as exc:
         raise GenerationError(
-            f"GrimTools 升华词缀 {affix} 尚无存档记录映射；"
+            f"GrimTools 飞升词缀 {affix} 尚无存档记录映射；"
             "已停止生成，以免产生游戏无法识别或缺少词缀的存档。"
         ) from exc
 
@@ -229,7 +231,7 @@ def _apply_equipment(
 
     if any(item.get("ascendedAffix") for item in equipment.values()):
         warnings.append(
-            "构筑包含升华词缀；已写入词缀记录，但随机品质字段仍采用默认值。"
+            "构筑包含飞升词缀；已写入词缀记录，但随机品质字段仍采用默认值。"
         )
     equipped = block3.tail["equipment"] + [
         item
