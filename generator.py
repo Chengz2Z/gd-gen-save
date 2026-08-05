@@ -5,6 +5,7 @@ from __future__ import annotations
 from copy import deepcopy
 from dataclasses import dataclass
 import hashlib
+import json
 from pathlib import Path
 import random
 import re
@@ -31,18 +32,6 @@ EQUIPMENT_SLOTS = {
     "weapon2": ("weapon", 0, 1),
     "weapon1Alt": ("weapon", 1, 0),
     "weapon2Alt": ("weapon", 1, 1),
-}
-
-
-AUTOCAST_CONTROLLERS = {
-    "records/skills/devotion/tier1_18e_skill.dbr":
-        "records/controllers/itemskills/cast_@enemyonattack_15%.dbr",
-    "records/skills/devotion/tier2_05f_skill.dbr":
-        "records/controllers/itemskills/cast_@enemyonattackcrit_100%.dbr",
-    "records/skills/devotion/tier2_09f_skill.dbr":
-        "records/controllers/itemskills/cast_@enemyonattack_100%.dbr",
-    "records/skills/devotion/tier2_34e_skill.dbr":
-        "records/controllers/itemskills/cast_@enemyonattack_100%.dbr",
 }
 
 
@@ -278,10 +267,8 @@ def _apply_skills(skill_block: dict, build_skills: list[dict], warnings: list[st
         for skill in skill_block["skills"]
         if skill["autocast_skill_name"] and skill["autocast_controller_name"]
     }
-    controller_map.update(AUTOCAST_CONTROLLERS)
 
     generated: list[dict] = []
-    missing_controllers: list[str] = []
     for definition in build_skills:
         name = str(definition.get("name", ""))
         if not name:
@@ -298,19 +285,12 @@ def _apply_skills(skill_block: dict, build_skills: list[dict], warnings: list[st
         if autocast:
             controller = controller_map.get(autocast, "")
             skill["autocast_controller_name"] = controller
-            if not controller:
-                missing_controllers.append(autocast)
         else:
             skill["autocast_controller_name"] = ""
         generated.append(skill)
 
     skill_block["skills"] = defaults + generated
     skill_block["item_skills"] = []
-    if missing_controllers:
-        warnings.append(
-            "以下星座技能缺少自动触发控制器映射，已保留技能但未绑定："
-            + "、".join(sorted(set(missing_controllers)))
-        )
     devotion_count = sum(
         1
         for skill in generated
