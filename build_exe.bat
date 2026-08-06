@@ -5,6 +5,7 @@ cd /d "%~dp0"
 python -m PyInstaller --noconfirm --clean --onefile --windowed ^
   --name GenerateSave ^
   --add-data "_template;_template" ^
+  --add-data "database;database" ^
   --distpath "dist" ^
   --workpath "build" ^
   --specpath "." ^

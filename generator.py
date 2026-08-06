@@ -16,6 +16,7 @@ from save_format import Block3Data, CharacterSave, SaveFormatError
 
 DATABASE_DIR = Path(__file__).resolve().parent / "database"
 DEVOTION_CONFIG_FILE = DATABASE_DIR / "devotion_config.json"
+DEVOTION_CONTROLLER_MAP_FILE = DATABASE_DIR / "devotion_controller_map.json"
 
 
 EQUIPMENT_SLOTS = {
@@ -49,6 +50,17 @@ def _load_devotion_config() -> dict[str, dict]:
         return {}
     try:
         with open(DEVOTION_CONFIG_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def _load_devotion_controller_map() -> dict[str, str]:
+    """从外部JSON文件加载虔诚技能控制器映射"""
+    if not DEVOTION_CONTROLLER_MAP_FILE.exists():
+        return {}
+    try:
+        with open(DEVOTION_CONTROLLER_MAP_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception:
         return {}
@@ -298,10 +310,13 @@ def _apply_skills(skill_block: dict, build_skills: list[dict], warnings: list[st
         if skill["autocast_skill_name"] and skill["autocast_controller_name"]
     }
 
-    # 加载星座技能配置
+    # 加载星座技能配置和控制器映射
     devotion_config = _load_devotion_config()
+    devotion_controller_map = _load_devotion_controller_map()
     
     generated: list[dict] = []
+    bound_devotion_skills: set[str] = set()  # 记录被绑定的虔诚技能
+    
     for definition in build_skills:
         name = str(definition.get("name", ""))
         if not name:
@@ -312,20 +327,37 @@ def _apply_skills(skill_block: dict, build_skills: list[dict], warnings: list[st
         )
         skill["level"] = level
         if name.startswith("records/skills/devotion/"):
-            skill["devotion_level"] = max(1, skill.get("devotion_level", 1))
-            # 从配置文件中查找星座技能的最大等级和经验值
+            # 从配置文件中查找虔诚技能的最大等级和经验值
             if name in devotion_config:
                 config = devotion_config[name]
-                skill["devotion_level"] = config.get("devotion_level", skill["devotion_level"])
+                skill["devotion_level"] = config.get("devotion_level", skill.get("devotion_level", 1))
                 skill["devotion_experience"] = config.get("devotion_experience", skill.get("devotion_experience", 0))
+            else:
+                skill["devotion_level"] = max(1, skill.get("devotion_level", 1))
+            # 设置 enabled 为 True（GrimTools 中有 level>0 的虔诚技能都是启用的）
+            skill["enabled"] = True
         autocast = str(definition.get("autoCastSkill", ""))
         skill["autocast_skill_name"] = autocast
         if autocast:
+            # 记录被绑定的虔诚技能
+            bound_devotion_skills.add(autocast)
+            # 优先从模板存档中查找控制器，其次从外部映射文件中查找
             controller = controller_map.get(autocast, "")
+            if not controller:
+                controller = devotion_controller_map.get(autocast, "")
+                if not controller:
+                    warnings.append(
+                        f"虔诚技能 {autocast} 缺少控制器映射，绑定可能无法正常工作"
+                    )
             skill["autocast_controller_name"] = controller
         else:
             skill["autocast_controller_name"] = ""
         generated.append(skill)
+    
+    # 将被绑定的虔诚技能的 level 设置为 1（表示已激活）
+    for skill in generated:
+        if skill["skill_name"] in bound_devotion_skills:
+            skill["level"] = 1
 
     skill_block["skills"] = defaults + generated
     skill_block["item_skills"] = []

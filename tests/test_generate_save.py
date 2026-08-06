@@ -191,7 +191,7 @@ class GeneratorTests(unittest.TestCase):
         )
         self.assertEqual(
             block["skills"][0]["autocast_controller_name"],
-            "records/controllers/itemskills/cast_@enemyonattack_100%.dbr",
+            "records/controllers/itemskills/cast_@enemyonattack_25%.dbr",
         )
         self.assertEqual(warnings, [])
 
