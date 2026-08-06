@@ -228,9 +228,7 @@ def _apply_equipment(
         else:
             block3.tail["weapon_sets"][location[1]]["items"][location[2]] = item
 
-    main_weapon = equipment.get("weapon1", {}).get("item", "")
-    if "/melee2h/" in main_weapon or "/ranged2h/" in main_weapon:
-        block3.tail["weapon_sets"][0]["items"][1] = _blank_item(rng)
+    _clear_2h_offhand(equipment, rng, block3.tail["weapon_sets"])
 
     if any(item.get("ascendedAffix") for item in equipment.values()):
         warnings.append(
@@ -242,6 +240,24 @@ def _apply_equipment(
         for item in weapon_set["items"]
     ]
     return sum(1 for item in equipped if item.get("basename"))
+
+
+def _is_2h_weapon(item_path: str) -> bool:
+    """检查武器路径是否为双手武器（melee2h、guns2h、crossbow2h）"""
+    return "/melee2h/" in item_path or "/guns2h/" in item_path or "/crossbow2h/" in item_path
+
+
+def _clear_2h_offhand(
+    equipment: dict, rng: random.Random, weapon_sets: list[dict]
+) -> None:
+    """双手武器占用双手，清除对应的副手槽位"""
+    for set_index, main_slot, offhand_slot in (
+        (0, "weapon1", "weapon2"),
+        (1, "weapon1Alt", "weapon2Alt"),
+    ):
+        main_weapon = equipment.get(main_slot, {}).get("item", "")
+        if _is_2h_weapon(main_weapon):
+            weapon_sets[set_index]["items"][1] = _blank_item(rng)
 
 
 def _skill_prototype_map(skill_block: dict) -> dict[str, dict]:
