@@ -14,6 +14,9 @@ import shutil
 from grimtools import GrimToolsBuild
 from save_format import Block3Data, CharacterSave, SaveFormatError
 
+DATABASE_DIR = Path(__file__).resolve().parent / "database"
+DEVOTION_CONFIG_FILE = DATABASE_DIR / "devotion_config.json"
+
 
 EQUIPMENT_SLOTS = {
     "head": ("equipment", 0),
@@ -40,6 +43,17 @@ EQUIPMENT_SLOTS = {
 # The following compact description expands to all 989 affixes in GD 1.3.0.0.
 # Writing the compact id creates an unknown affix, and the integer following
 # this field is not a random seed (non-zero values make current saves invalid).
+def _load_devotion_config() -> dict[str, dict]:
+    """从外部JSON文件加载星座技能最大等级和经验值配置"""
+    if not DEVOTION_CONFIG_FILE.exists():
+        return {}
+    try:
+        with open(DEVOTION_CONFIG_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
 def _build_ascended_affix_records() -> dict[str, str]:
     records: dict[str, str] = {}
 
@@ -268,6 +282,9 @@ def _apply_skills(skill_block: dict, build_skills: list[dict], warnings: list[st
         if skill["autocast_skill_name"] and skill["autocast_controller_name"]
     }
 
+    # 加载星座技能配置
+    devotion_config = _load_devotion_config()
+    
     generated: list[dict] = []
     for definition in build_skills:
         name = str(definition.get("name", ""))
@@ -280,6 +297,11 @@ def _apply_skills(skill_block: dict, build_skills: list[dict], warnings: list[st
         skill["level"] = level
         if name.startswith("records/skills/devotion/"):
             skill["devotion_level"] = max(1, skill.get("devotion_level", 1))
+            # 从配置文件中查找星座技能的最大等级和经验值
+            if name in devotion_config:
+                config = devotion_config[name]
+                skill["devotion_level"] = config.get("devotion_level", skill["devotion_level"])
+                skill["devotion_experience"] = config.get("devotion_experience", skill.get("devotion_experience", 0))
         autocast = str(definition.get("autoCastSkill", ""))
         skill["autocast_skill_name"] = autocast
         if autocast:

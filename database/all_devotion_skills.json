@@ -1,0 +1,3455 @@
+{
+  "character_name": "Paladin",
+  "character_level": 100,
+  "total_devotion_skills": 431,
+  "skills": [
+    {
+      "skill_name": "records/skills/devotion/tier1_01a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_01b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_01c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_01d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_01e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_02a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_02b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_02c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_02e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_03a.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_03b.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_03c.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_03d.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_04a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_04b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_04c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_05a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_05b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_05c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_05d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_05e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_06a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_06b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_06c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_06d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_06e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_07a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_07b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_07c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_07d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_08a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_08b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_08c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_08d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_08e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_09a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_09b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_09c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_09d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_09e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_10a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_10b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_10c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_10d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_10e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_11a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_11b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_11c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_12a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_12b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_12c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_12d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_13a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_13b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_13c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_13d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_15a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_15b.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_15c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_15d.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_15e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_16a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_16b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_16c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_16d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_18a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_18b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_18c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_18d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_18e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_19a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_19b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_19c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_19d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_19e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_20a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_20b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_20c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_20d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_20e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_21a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_21b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_21c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_21e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_23a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_23b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_23c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_23d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_25a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_25b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_25d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_25e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_26a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_26b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_26c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_26d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_26e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_27a.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_27b.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_27c.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_29a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_29b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_29c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_29d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_29e_skill.dbr",
+      "level": 0,
+      "devotion_level": 25,
+      "devotion_experience": 22862135,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_30a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_30b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_30c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_30d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_31a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_31b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_31c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_31d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_31e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_32a.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_32b.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_32c.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_32d.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_32e.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_33a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_33b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_33c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_34a.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_34b.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_34c.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_34d.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_34e.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_35a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_35b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_35c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_36a.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_36b.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_36c.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_37a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_37b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_37c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_38a.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_38b.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_38c.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_41a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_41b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_41c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_41d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_44a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_44b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_44c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_44d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_45a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_45b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_45c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier1_45d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_01a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_01b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_01c_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_02a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_02b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_02e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_02f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_03a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_03b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_03c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_03d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_03e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_03f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_04a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_04b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_04c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_04e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_04g_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_05a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_05b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_05c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_05d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_05f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_06a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_06b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_06d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_06f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_06g_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_07a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_07b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_07c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_07d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_07e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_07f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_07g_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_08a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_08b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_08c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_08e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_08g_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_09a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_09b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_09c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_09d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_09e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_09f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_10a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_10b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_10c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_10d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_10e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_10f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_11a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_11b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_11c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_11d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_11e_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_12a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_12b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_12c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_12d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_12e_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_13a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_13b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_13c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_13d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_13f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_13g_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_14a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_14b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_14d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_14f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_14g_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_15a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_15b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_15f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_15g_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_16a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_16b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_16c_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_17a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_17b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_17c_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_17d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_17e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_18a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_18b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_18c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_18e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_18f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_19a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_19b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_19c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_19d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_19e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_20a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_20b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_20e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_20f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_23a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_23b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_23c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_23d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_23e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_23f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_24a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_24b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_24c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_24d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_24e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_24f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_28a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_28b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_28c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_28d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_28e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_28f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_29a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_29b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_29c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_29e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_29f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_29g_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_30a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_30b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_30c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_30d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_30e_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_31a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_31b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_31c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_31d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_31e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_31f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_32a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_32b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_32c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_32d_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_34a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_34b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_34c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_34d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_34e_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_36a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_36b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_36c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_36d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_36e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_36f_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_37a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_37b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_37c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_37d_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_38a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_38b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_38c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_38d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_38e_skill.dbr",
+      "level": 0,
+      "devotion_level": 20,
+      "devotion_experience": 24207639,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier2_38f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_01a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_01b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_01c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_01d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_01e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_01f_skill.dbr",
+      "level": 0,
+      "devotion_level": 10,
+      "devotion_experience": 8471532,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_02a.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_02b.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_02c.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_02d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_02e_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_02f.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_02g.dbr",
+      "level": 1,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_02h_skill.dbr",
+      "level": 1,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_03a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_03b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_03c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_03d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_03e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_03f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_03g_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_04a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_04b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_04c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_04d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_04g_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_05a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_05b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_05c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_05d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_05e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_05f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_05g_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_06a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_06b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_06c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_06d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_06e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_06f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_07a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_07b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_07c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_07d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_07e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_07f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_07g_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_08a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_08b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_08c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_08d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_08e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_08g_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_09a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_09b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_09d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_09f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_10a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_10b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_10c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_10d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_10e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_10f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_11a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_11b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_11c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_11f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_11g_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_12a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_12b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_12c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_12d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_12g_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_13a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_13b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_13c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_13d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_13e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_13f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_13g_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_14a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_14b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_14d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_14e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_14f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_15a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_15b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_15c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_15d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_15e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_15f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_16a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_16b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_16c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_16e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_16f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_17a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_17b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_17c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_17d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_17f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_18a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_18b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_18c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_18d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_18e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_18f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_19a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_19b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_19c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_19e_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_20a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_20b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_20c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_20d.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_20e_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_20f.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_21a.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_21b.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_21c.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_21e.dbr",
+      "level": 0,
+      "devotion_level": 1,
+      "devotion_experience": 0,
+      "enabled": false,
+      "active": false
+    },
+    {
+      "skill_name": "records/skills/devotion/tier3_21f_skill.dbr",
+      "level": 0,
+      "devotion_level": 15,
+      "devotion_experience": 26160399,
+      "enabled": true,
+      "active": false
+    }
+  ]
+}
