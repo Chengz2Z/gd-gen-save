@@ -10,9 +10,31 @@ import sys
 from generator import GenerationError, generate_save
 from grimtools import GrimToolsError, fetch_build
 from save_format import SaveFormatError
+from license_manager import LicenseError, install_license, validate_license
 
 
 TOOL_DIRECTORY = Path(__file__).resolve().parent
+
+
+def ensure_activated() -> bool:
+    status = validate_license()
+    if status.valid:
+        return True
+    print(f"[授权] {status.reason}", file=sys.stderr)
+    print(f"[授权] 本机机器码：{status.machine_code}", file=sys.stderr)
+    try:
+        value = input("请输入作者签发的许可证文件路径（直接回车取消）：").strip().strip('"')
+        if not value:
+            return False
+        install_license(Path(value))
+    except (EOFError, KeyboardInterrupt):
+        print("\n[授权] 已取消导入。", file=sys.stderr)
+        return False
+    except (LicenseError, OSError) as exc:
+        print(f"[授权] 许可证导入失败：{exc}", file=sys.stderr)
+        return False
+    print("[授权] 许可证导入成功。")
+    return True
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -41,6 +63,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    if not ensure_activated():
+        return 2
     args = build_parser().parse_args(argv)
     try:
         print("[1/4] 正在读取 GrimTools 构筑……")

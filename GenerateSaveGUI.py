@@ -14,9 +14,82 @@ from tkinter import filedialog, messagebox, ttk
 from generator import GenerationError, generate_save, validate_character_name
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
+from license_manager import LicenseError, install_license, validate_license
 
 
 APP_TITLE = "Grim Dawn 存档生成器"
+APP_TITLE_AND_AUTHOR = "Grim Dawn 存档生成器 ——by橙子"
+
+def ensure_activated(root: tk.Tk) -> bool:
+    """Validate the local license or let the user import an author-issued one."""
+    status = validate_license()
+    if status.valid:
+        return True
+
+    accepted = False
+    dialog = tk.Toplevel(root)
+    dialog.title("软件离线授权")
+    dialog.resizable(False, False)
+    dialog.grab_set()
+
+    frame = ttk.Frame(dialog, padding=20)
+    frame.pack(fill=tk.BOTH, expand=True)
+    ttk.Label(
+        frame,
+        text="此电脑尚未授权。请将下面的机器码发送给软件作者，\n收到许可证文件后点击“导入许可证”。",
+        justify=tk.LEFT,
+    ).grid(row=0, column=0, columnspan=2, sticky=tk.W, pady=(0, 12))
+    ttk.Label(frame, text=f"当前状态：{status.reason}", foreground="#9A3412").grid(
+        row=1, column=0, columnspan=2, sticky=tk.W, pady=(0, 10)
+    )
+    code_var = tk.StringVar(value=status.machine_code)
+    code_entry = ttk.Entry(frame, textvariable=code_var, width=43, state="readonly")
+    code_entry.grid(row=2, column=0, sticky=tk.EW)
+
+    def copy_code() -> None:
+        root.clipboard_clear()
+        root.clipboard_append(status.machine_code)
+        root.update()
+        copy_button.configure(text="已复制")
+
+    copy_button = ttk.Button(frame, text="复制机器码", command=copy_code)
+    copy_button.grid(row=2, column=1, padx=(8, 0))
+
+    def import_selected() -> None:
+        nonlocal accepted
+        selected = filedialog.askopenfilename(
+            title="选择作者签发的许可证",
+            filetypes=(("许可证文件", "*.lic"), ("所有文件", "*.*")),
+            parent=dialog,
+        )
+        if not selected:
+            return
+        try:
+            installed = install_license(Path(selected))
+        except (LicenseError, OSError) as exc:
+            messagebox.showerror("导入失败", str(exc), parent=dialog)
+            return
+        accepted = True
+        messagebox.showinfo(
+            "授权成功",
+            f"许可证已安装。\n\n机器码：{installed.machine_code}",
+            parent=dialog,
+        )
+        dialog.destroy()
+
+    buttons = ttk.Frame(frame)
+    buttons.grid(row=3, column=0, columnspan=2, sticky=tk.E, pady=(18, 0))
+    ttk.Button(buttons, text="退出", command=dialog.destroy).pack(side=tk.RIGHT)
+    ttk.Button(buttons, text="导入许可证…", command=import_selected).pack(
+        side=tk.RIGHT, padx=(0, 8)
+    )
+    dialog.protocol("WM_DELETE_WINDOW", dialog.destroy)
+    dialog.update_idletasks()
+    x = (dialog.winfo_screenwidth() - dialog.winfo_reqwidth()) // 2
+    y = (dialog.winfo_screenheight() - dialog.winfo_reqheight()) // 2
+    dialog.geometry(f"+{x}+{y}")
+    root.wait_window(dialog)
+    return accepted
 
 
 def resource_directory() -> Path:
@@ -44,7 +117,7 @@ class SaveGeneratorApp:
         self.template_placeholder = "可选择存档模板，未选时使用自带模板"
         self.template_placeholder_active = False
 
-        root.title(APP_TITLE)
+        root.title(APP_TITLE_AND_AUTHOR)
         root.minsize(620, 410)
         root.geometry("700x470")
         root.protocol("WM_DELETE_WINDOW", self._close)
@@ -114,7 +187,7 @@ class SaveGeneratorApp:
 
         ttk.Label(
             frame,
-            text="生成结果保存在程序同目录的 output 文件夹中。",
+            text="本软件仅供内部测试人员使用，禁止传播！如果您通过付费或其它方式获取本软件，请立即删除并举报相关渠道。",
             foreground="#555555",
         ).grid(row=6, column=0, columnspan=3, sticky=tk.W, pady=(10, 0))
 
@@ -316,11 +389,11 @@ class SaveGeneratorApp:
                     f"星座节点: {result.devotion_count}",
                 )
             )
-            self.events.put(("log", f"      输出目录: {result.output_directory}"))
             for warning in result.warnings:
                 self.events.put(("log", f"[注意] {warning}"))
             self.events.put(("progress", 100))
             self.events.put(("success", result.output_directory))
+            self.events.put(("log", f"输出目录: {result.output_directory}"))
         except (GenerationError, GrimToolsError, SaveFormatError, OSError) as exc:
             self.events.put(("error", str(exc)))
         except Exception as exc:  # Keep the packaged GUI from exiting silently.
@@ -377,6 +450,11 @@ def main() -> int:
         return 0
 
     root = tk.Tk()
+    root.withdraw()
+    if not ensure_activated(root):
+        root.destroy()
+        return 1
+    root.deiconify()
     SaveGeneratorApp(root)
     root.mainloop()
     return 0

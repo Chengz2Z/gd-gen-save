@@ -1,5 +1,25 @@
 # GrimTools 构筑存档生成工具
 
+## 离线授权
+
+采用“用户提供机器码、作者离线签发”的授权方式：
+
+1. 用户首次运行 `GenerateSave.exe`，复制授权窗口显示的机器码并发送给作者。
+2. 作者在工程目录执行以下命令：
+
+   ```powershell
+   python .\license_issuer.py "用户机器码"
+   ```
+
+3. 签发结果默认位于 `licenses\GDAG-机器码.lic`。将该 `.lic` 文件发给用户。
+4. 用户在授权窗口点击“导入许可证”，以后启动无需再次导入。
+
+用户端许可证安装在 `%LOCALAPPDATA%\GrimDawnArchiveGenerator\license.lic`。许可证绑定 Windows MachineGuid、系统卷序列号和产品标识，复制到其他电脑后无效。Windows 重装或系统盘变化后需要提供新机器码重新签发。
+
+许可证使用 Ed25519 数字签名；用户 EXE 只包含公钥，不包含签发私钥。`license_issuer.py` 保存了签发私钥，拿到该文件的人可以签发任意机器的许可证，因此该文件及整个源码目录仅供作者保存，绝对不要与用户 EXE 一同分发。建议至少使用操作系统账户权限、加密磁盘和私有代码仓库保护源码。
+
+> 纯离线程序仍不能绝对阻止二进制补丁。正式分发时建议再配合 Nuitka/PyArmor、Authenticode 代码签名和安装包 ACL。没有服务器时也无法在线撤销已经签发的许可证。
+
 本工具以 `_template` 完整角色存档为模板，读取 GrimTools 构筑链接，生成一个新的《恐怖黎明》角色目录。模板中的任务、传送点、声望、地图探索等进度保持不变；角色名称、职业、等级属性、技能、星座和装备会按构筑替换。
 
 ## 使用方法
@@ -17,7 +37,7 @@ dist/GenerateSave.exe
 如需重新构建 EXE，请先安装 PyInstaller，然后运行 `build_exe.bat`：
 
 ```powershell
-python -m pip install pyinstaller
+python -m pip install -r requirements.txt
 .\build_exe.bat
 ```
 
