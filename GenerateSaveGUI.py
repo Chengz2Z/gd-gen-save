@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 import queue
@@ -14,11 +15,12 @@ from tkinter import filedialog, messagebox, ttk
 from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_character_name
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
-from license_manager import LicenseError, install_license, validate_license
+from license_manager import LicenseError, default_license_path, install_license, validate_license
 
 
 APP_TITLE = "Grim Dawn 存档生成器"
 APP_TITLE_AND_AUTHOR = "Grim Dawn 存档生成器 ——by橙子"
+CONFIG_FILE = default_license_path().parent / "gui_config.json"
 
 SLOT_LABELS: dict[str, str] = {
     "weapon1": "武器1",
@@ -194,11 +196,21 @@ class SaveGeneratorApp:
         self.name_entry.grid(row=2, column=1, sticky=tk.EW, pady=6)
         self.name_entry.bind("<Return>", lambda _event: self.start_generation())
 
+        # 记住名称按钮
+        self.remember_name_var = tk.BooleanVar()
+        self.remember_name_button = ttk.Button(
+            frame, text="记住名称", command=self._on_remember_name_toggle
+        )
+        self.remember_name_button.grid(row=2, column=2, sticky=tk.W, padx=(6, 0), pady=6)
+
+        # 加载保存的配置
+        self._load_config()
+
         ttk.Label(frame, text="模板目录：").grid(row=3, column=0, sticky=tk.W, pady=6)
         self.template_entry = ttk.Entry(frame, textvariable=self.template_var)
         self.template_entry.grid(row=3, column=1, sticky=tk.EW, pady=6)
         self.template_browse_button = ttk.Button(
-            frame, text="浏览…", command=self._browse_template
+            frame, text="浏览", command=self._browse_template
         )
         self.template_browse_button.grid(row=3, column=2, sticky=tk.W, padx=(6, 0), pady=6)
         
@@ -292,6 +304,49 @@ class SaveGeneratorApp:
         """设置模板输入框的占位符提示"""
         self.template_entry.bind("<FocusIn>", self._on_template_focus_in)
         self.template_entry.bind("<FocusOut>", self._on_template_focus_out)
+
+    def _load_config(self) -> None:
+        """加载保存的配置"""
+        try:
+            if CONFIG_FILE.exists():
+                with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                    config = json.load(f)
+                saved_name = config.get("character_name", "")
+                remember = config.get("remember_name", False)
+                if remember and saved_name:
+                    self.name_var.set(saved_name)
+                    self.remember_name_var.set(True)
+            self._update_remember_button_text()
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    def _save_config(self) -> None:
+        """保存配置到文件"""
+        try:
+            config = {}
+            if CONFIG_FILE.exists():
+                with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                    config = json.load(f)
+            config["remember_name"] = self.remember_name_var.get()
+            if self.remember_name_var.get():
+                config["character_name"] = self.name_var.get().strip()
+            with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+                json.dump(config, f, ensure_ascii=False, indent=2)
+        except OSError:
+            pass
+
+    def _on_remember_name_toggle(self) -> None:
+        """记住名称按钮点击时切换状态"""
+        self.remember_name_var.set(not self.remember_name_var.get())
+        self._update_remember_button_text()
+        self._save_config()
+
+    def _update_remember_button_text(self) -> None:
+        """更新记住按钮的文本"""
+        if self.remember_name_var.get():
+            self.remember_name_button.configure(text="✅记住名称")
+        else:
+            self.remember_name_button.configure(text="❌记住名称")
 
     def _show_template_placeholder(self) -> None:
         """显示占位符提示"""
@@ -539,6 +594,7 @@ class SaveGeneratorApp:
                 elif kind == "success":
                     self.last_output = Path(value)
                     self._set_running(False)
+                    self._save_config()  # 保存配置（包括记住的名称）
                     messagebox.showinfo(
                         APP_TITLE,
                         f"角色存档生成成功！\n\n{self.last_output}",
@@ -564,6 +620,7 @@ class SaveGeneratorApp:
             APP_TITLE, "角色存档仍在生成，确定要退出吗？", parent=self.root
         ):
             return
+        self._save_config()  # 退出时保存配置
         self.root.destroy()
 
 
