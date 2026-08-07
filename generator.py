@@ -17,6 +17,7 @@ from save_format import Block3Data, CharacterSave, SaveFormatError
 DATABASE_DIR = Path(__file__).resolve().parent / "database"
 DEVOTION_CONFIG_FILE = DATABASE_DIR / "devotion_config.json"
 DEVOTION_CONTROLLER_MAP_FILE = DATABASE_DIR / "devotion_controller_map.json"
+CRAFTING_BONUS_FILE = DATABASE_DIR / "crafting_bonus.json"
 
 
 EQUIPMENT_SLOTS = {
@@ -61,6 +62,17 @@ def _load_devotion_controller_map() -> dict[str, str]:
         return {}
     try:
         with open(DEVOTION_CONTROLLER_MAP_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def _load_crafting_bonus() -> dict[str, dict]:
+    """从外部JSON文件加载锻造奖励数据"""
+    if not CRAFTING_BONUS_FILE.exists():
+        return {}
+    try:
+        with open(CRAFTING_BONUS_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception:
         return {}
@@ -200,7 +212,12 @@ def _ascended_affix_record(value: object) -> str:
         ) from exc
 
 
-def _blank_item(rng: random.Random, item_data: dict | None = None, forced_seed: int | None = None) -> dict:
+def _blank_item(
+    rng: random.Random,
+    item_data: dict | None = None,
+    forced_seed: int | None = None,
+    crafting_bonus: str = "",
+) -> dict:
     data = item_data or {}
     component = str(data.get("component", ""))
     augment = str(data.get("augment", ""))
@@ -210,7 +227,7 @@ def _blank_item(rng: random.Random, item_data: dict | None = None, forced_seed: 
         "basename": str(data.get("item", "")),
         "prefix_name": str(data.get("prefix", "")),
         "suffix_name": str(data.get("suffix", "")),
-        "modifier_name": "",
+        "modifier_name": crafting_bonus,
         "transmute_name": "",
         "seed": seed_value,
         "relic_name": component,
@@ -231,13 +248,15 @@ def _blank_item(rng: random.Random, item_data: dict | None = None, forced_seed: 
 def _apply_equipment(
     block3: Block3Data, equipment: dict, rng: random.Random, warnings: list[str],
     slot_seeds: dict[str, int] | None = None,
+    slot_crafting: dict[str, str] | None = None,
 ) -> int:
     if not block3.has_data or not isinstance(block3.tail, dict):
         raise GenerationError("模板存档没有可写入的装备数据")
 
     for slot, location in EQUIPMENT_SLOTS.items():
         forced = (slot_seeds or {}).get(slot)
-        item = _blank_item(rng, equipment.get(slot), forced_seed=forced)
+        crafting = (slot_crafting or {}).get(slot, "")
+        item = _blank_item(rng, equipment.get(slot), forced_seed=forced, crafting_bonus=crafting)
         if location[0] == "equipment":
             block3.tail["equipment"][location[1]] = item
         else:
@@ -390,6 +409,7 @@ def _clean_hotslots(save: CharacterSave) -> None:
 def apply_build(
     save: CharacterSave, build: GrimToolsBuild, character_name: str,
     slot_seeds: dict[str, int] | None = None,
+    slot_crafting: dict[str, str] | None = None,
 ) -> tuple[dict, list[str]]:
     warnings: list[str] = []
     data = build.data
@@ -422,7 +442,8 @@ def apply_build(
 
     rng = _seed_rng(build, character_name)
     equipment_count = _apply_equipment(
-        save.block(3).payload, data.get("equipment", {}), rng, warnings, slot_seeds
+        save.block(3).payload, data.get("equipment", {}), rng, warnings, slot_seeds,
+        slot_crafting
     )
     skill_count, devotion_count = _apply_skills(
         save.block(8).payload, data.get("skills", []), warnings
@@ -453,6 +474,7 @@ def generate_save(
     output_root: Path,
     overwrite: bool = False,
     slot_seeds: dict[str, int] | None = None,
+    slot_crafting: dict[str, str] | None = None,
 ) -> GenerationResult:
     name = validate_character_name(character_name)
     template = template_directory.resolve()
@@ -474,7 +496,7 @@ def generate_save(
 
     try:
         save = CharacterSave.load(output_directory / "player.gdc")
-        summary, warnings = apply_build(save, build, name, slot_seeds)
+        summary, warnings = apply_build(save, build, name, slot_seeds, slot_crafting)
         generated = save.to_bytes()
         verified = CharacterSave.from_bytes(generated)
         if verified.header.character_name != name:

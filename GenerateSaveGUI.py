@@ -12,7 +12,7 @@ import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
-from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_character_name
+from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_character_name, _load_crafting_bonus
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
 from license_manager import LicenseError, default_license_path, install_license, validate_license
@@ -146,12 +146,18 @@ class SaveGeneratorApp:
         self.slot_seed_vars: dict[str, tk.StringVar] = {
             slot: tk.StringVar() for slot in SLOT_ORDER
         }
+        # 加载锻造奖励数据
+        self.crafting_bonus_data = _load_crafting_bonus()
+        self.crafting_bonus_options = self._build_crafting_options()
+        self.slot_crafting_vars: dict[str, tk.StringVar] = {
+            slot: tk.StringVar(value="") for slot in SLOT_ORDER
+        }
         self.template_placeholder = "可选择存档模板，未选择时使用自带模板"
         self.template_placeholder_active = False
         self.advanced_panel_visible = False
 
         root.title(APP_TITLE_AND_AUTHOR)
-        root.minsize(660, 520)
+        root.minsize(660, 560)
         root.protocol("WM_DELETE_WINDOW", self._close)
 
         # 窗口居中显示（先隐藏，设置好位置后再显示）
@@ -160,7 +166,7 @@ class SaveGeneratorApp:
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
         window_width = 660
-        window_height = 520
+        window_height = 560
         x = (screen_width - window_width) // 2
         y = (screen_height - window_height) // 2
         root.geometry(f"{window_width}x{window_height}+{x}+{y}")
@@ -257,12 +263,13 @@ class SaveGeneratorApp:
 
         # 右侧高级面板（初始隐藏）
         self.advanced_panel = ttk.LabelFrame(
-            self.main_container, text="装备种子（留空随机生成）", padding=10
+            self.main_container, text="高级设置", padding=10
         )
         self.slot_seed_entries: dict[str, ttk.Entry] = {}
+        self.slot_crafting_combos: dict[str, ttk.Combobox] = {}
 
-        # 用 Canvas + Scrollbar 实现可滚动的种子面板
-        canvas = tk.Canvas(self.advanced_panel, highlightthickness=0, width=200)
+        # 用 Canvas + Scrollbar 实现可滚动的面板
+        canvas = tk.Canvas(self.advanced_panel, highlightthickness=0, width=280)
         scrollbar_adv = ttk.Scrollbar(self.advanced_panel, orient=tk.VERTICAL, command=canvas.yview)
         scroll_frame = ttk.Frame(canvas)
         scroll_frame.bind(
@@ -279,17 +286,46 @@ class SaveGeneratorApp:
             canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
         canvas.bind_all("<MouseWheel>", _on_mousewheel)
 
+        # 标题行
+        ttk.Label(scroll_frame, text="槽位", font=("Microsoft YaHei UI", 9, "bold")).grid(
+            row=0, column=0, sticky=tk.W, pady=(0, 4), padx=(0, 4)
+        )
+        ttk.Label(scroll_frame, text="种子", font=("Microsoft YaHei UI", 9, "bold")).grid(
+            row=0, column=1, sticky=tk.W, pady=(0, 4), padx=(0, 4)
+        )
+        ttk.Label(scroll_frame, text="锻造奖励", font=("Microsoft YaHei UI", 9, "bold")).grid(
+            row=0, column=2, sticky=tk.W, pady=(0, 4)
+        )
+
+        crafting_display_names = [opt[0] for opt in self.crafting_bonus_options]
+
         for i, slot in enumerate(SLOT_ORDER):
+            row = i + 1
             label_text = SLOT_LABELS.get(slot, slot)
             ttk.Label(scroll_frame, text=f"{label_text}：").grid(
-                row=i, column=0, sticky=tk.W, pady=2, padx=(0, 4)
+                row=row, column=0, sticky=tk.W, pady=2, padx=(0, 4)
             )
+            # 种子输入框
             entry = ttk.Entry(
-                scroll_frame, textvariable=self.slot_seed_vars[slot], width=14
+                scroll_frame, textvariable=self.slot_seed_vars[slot], width=12
             )
-            entry.grid(row=i, column=1, sticky=tk.EW, pady=2)
+            entry.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=(0, 4))
             self.slot_seed_entries[slot] = entry
+
+            # 锻造奖励下拉框
+            combo = ttk.Combobox(
+                scroll_frame,
+                textvariable=self.slot_crafting_vars[slot],
+                values=crafting_display_names,
+                state="readonly",
+                width=16,
+            )
+            combo.set("")  # 默认空
+            combo.grid(row=row, column=2, sticky=tk.EW, pady=2)
+            self.slot_crafting_combos[slot] = combo
+
         scroll_frame.columnconfigure(1, weight=1)
+        scroll_frame.columnconfigure(2, weight=1)
 
 
 
@@ -299,6 +335,14 @@ class SaveGeneratorApp:
         
         # 初始显示占位符
         self._show_template_placeholder()
+
+    def _build_crafting_options(self) -> list[tuple[str, str]]:
+        """构建锻造奖励选项列表：(显示名称, 路径)"""
+        options = [("", "")]  # 空选项
+        for path, info in sorted(self.crafting_bonus_data.items()):
+            display_name = info.get("display_name", path.split("/")[-1])
+            options.append((display_name, path))
+        return options
 
     def _setup_template_placeholder(self) -> None:
         """设置模板输入框的占位符提示"""
@@ -379,9 +423,9 @@ class SaveGeneratorApp:
             self.advanced_panel.pack_forget()
             self.advanced_panel_visible = False
             self.root.update_idletasks()
-            self.root.geometry("660x520")
+            self.root.geometry("660x560")
         else:
-            self.root.geometry("840x520")
+            self.root.geometry("960x560")
             self.root.update_idletasks()
             self.advanced_panel.pack(side=tk.RIGHT, fill=tk.BOTH, padx=(0, 10), pady=20)
             self.advanced_panel_visible = True
@@ -439,8 +483,11 @@ class SaveGeneratorApp:
         self.template_browse_button.configure(state=tk.DISABLED if running else tk.NORMAL)
         self.advanced_button.configure(state=tk.DISABLED if running else tk.NORMAL)
         entry_state = tk.DISABLED if running else tk.NORMAL
+        combo_state = "disabled" if running else "readonly"
         for entry in self.slot_seed_entries.values():
             entry.configure(state=entry_state)
+        for combo in self.slot_crafting_combos.values():
+            combo.configure(state=combo_state)
         if running:
             self.open_button.configure(state=tk.DISABLED)
             self.progress["value"] = 0
@@ -518,19 +565,31 @@ class SaveGeneratorApp:
                 self.slot_seed_entries[slot].focus_set()
                 return
 
+        # 收集锻造奖励选择
+        slot_crafting: dict[str, str] = {}
+        for slot in SLOT_ORDER:
+            selected_name = self.slot_crafting_vars[slot].get()
+            if not selected_name:
+                continue
+            # 查找对应的路径
+            for display_name, path in self.crafting_bonus_options:
+                if display_name == selected_name:
+                    slot_crafting[slot] = path
+                    break
+
         self.last_output = None
         self._clear_log()
         self._set_running(True)
         is_default_template = (template_path == resource_directory() / "_template")
         worker = threading.Thread(
             target=self._generate,
-            args=(link, name, template_path, is_default_template, output_root, overwrite, slot_seeds or None),
+            args=(link, name, template_path, is_default_template, output_root, overwrite, slot_seeds or None, slot_crafting or None),
             daemon=True,
         )
         worker.start()
 
     def _generate(
-        self, link: str, name: str, template_directory: Path, is_default_template: bool, output_root: Path, overwrite: bool, slot_seeds: dict[str, int] | None
+        self, link: str, name: str, template_directory: Path, is_default_template: bool, output_root: Path, overwrite: bool, slot_seeds: dict[str, int] | None, slot_crafting: dict[str, str] | None
     ) -> None:
         try:
             self.events.put(("progress", 10))
@@ -546,6 +605,9 @@ class SaveGeneratorApp:
             if slot_seeds:
                 labels = [SLOT_LABELS.get(s, s) for s in slot_seeds]
                 self.events.put(("log", f"      使用自定义种子部位: {', '.join(labels)}"))
+            if slot_crafting:
+                labels = [f"{SLOT_LABELS.get(s, s)}->{self.crafting_bonus_data.get(p, {}).get('display_name', p.split('/')[-1])}" for s, p in slot_crafting.items()]
+                self.events.put(("log", f"      使用锻造奖励: {', '.join(labels)}"))
             
             self.events.put(("progress", 30))
             self.events.put(("log", "[2/4] 正在复制模板并写入角色数据……"))
@@ -556,6 +618,7 @@ class SaveGeneratorApp:
                 output_root,
                 overwrite=overwrite,
                 slot_seeds=slot_seeds,
+                slot_crafting=slot_crafting,
             )
             
             self.events.put(("progress", 70))

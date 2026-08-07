@@ -1,0 +1,571 @@
+{
+  "records/items/lootaffixes/crafting/ac04_energyregen.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac04_energyregen.dbr",
+    "display_name": "能量回复(8-16%)",
+    "description": "12%",
+    "stats": {
+      "characterManaRegenModifier": 12.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao02_piercedmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao02_piercedmg.dbr",
+    "display_name": "穿刺伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensivePierceModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao07_vitalitydmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao07_vitalitydmg.dbr",
+    "display_name": "活力伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveLifeModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao11_firedmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao11_firedmg.dbr",
+    "display_name": "火焰伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveFireModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao14_oa.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao14_oa.dbr",
+    "display_name": "攻击能力(4-12)",
+    "description": "8",
+    "stats": {
+      "characterOffensiveAbility": 8.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao04_traumadmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao04_traumadmg.dbr",
+    "display_name": "创伤伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveSlowPhysicalModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao12_colddmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao12_colddmg.dbr",
+    "display_name": "冰冷伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveColdModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad01_fireresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad01_fireresist.dbr",
+    "display_name": "火焰抗性(3-7%)",
+    "description": "5%",
+    "stats": {
+      "defensiveFire": 5.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad06_protection.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad06_protection.dbr",
+    "display_name": "护甲(2-4%)",
+    "description": "3%",
+    "stats": {
+      "defensiveProtectionModifier": 3.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad03_lightningresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad03_lightningresist.dbr",
+    "display_name": "闪电抗性(3-7%)",
+    "description": "5%",
+    "stats": {
+      "defensiveLightning": 5.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad07_bleedresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad07_bleedresist.dbr",
+    "display_name": "流血抗性(3-7%)",
+    "description": "5%",
+    "stats": {
+      "defensiveBleeding": 5.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad10_chaosresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad10_chaosresist.dbr",
+    "display_name": "混乱抗性(2-4%)",
+    "description": "3%",
+    "stats": {
+      "defensiveChaos": 3.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 35.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad09_aetherresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad09_aetherresist.dbr",
+    "display_name": "虚化抗性(2-4%)",
+    "description": "3%",
+    "stats": {
+      "defensiveAether": 3.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 35.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ac01_health.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac01_health.dbr",
+    "display_name": "生命值(38-80)",
+    "description": "59",
+    "stats": {
+      "characterLife": 59.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 36.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ac02_healthregen.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac02_healthregen.dbr",
+    "display_name": "生命回复(5-11%)",
+    "description": "8%",
+    "stats": {
+      "characterLifeRegenModifier": 8.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ac03_energy.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac03_energy.dbr",
+    "display_name": "能量值(3-7%)",
+    "description": "5%",
+    "stats": {
+      "characterManaModifier": 5.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ac05_physique.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac05_physique.dbr",
+    "display_name": "体格(2-4%)",
+    "description": "3%",
+    "stats": {
+      "characterStrengthModifier": 3.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 35.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad02_coldresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad02_coldresist.dbr",
+    "display_name": "冰冷抗性(3-7%)",
+    "description": "5%",
+    "stats": {
+      "defensiveCold": 5.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad04_poisonresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad04_poisonresist.dbr",
+    "display_name": "毒酸抗性(3-7%)",
+    "description": "5%",
+    "stats": {
+      "defensivePoison": 5.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad05_pierceresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad05_pierceresist.dbr",
+    "display_name": "穿刺抗性(3-7%)",
+    "description": "5%",
+    "stats": {
+      "defensivePierce": 5.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad08_da.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad08_da.dbr",
+    "display_name": "防御能力(4-12)",
+    "description": "8",
+    "stats": {
+      "characterDefensiveAbility": 8.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad08_elementalresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad08_elementalresist.dbr",
+    "display_name": "元素抗性(3-5%)",
+    "description": "4%",
+    "stats": {
+      "defensiveElementalResistance": 4.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad11_reflect.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad11_reflect.dbr",
+    "display_name": "伤害反弹(2-4%)",
+    "description": "3%",
+    "stats": {
+      "defensiveReflect": 3.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 35.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad12_vitalityresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad12_vitalityresist.dbr",
+    "display_name": "活力抗性(3-5%)",
+    "description": "4%",
+    "stats": {
+      "defensiveLife": 4.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao01_physicaldmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao01_physicaldmg.dbr",
+    "display_name": "物理伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensivePhysicalModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao03_bleeddmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao03_bleeddmg.dbr",
+    "display_name": "流血伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveSlowBleedingModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao05_elementaldmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao05_elementaldmg.dbr",
+    "display_name": "元素伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveElementalModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao06_acidpoisondmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao06_acidpoisondmg.dbr",
+    "display_name": "毒酸伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensivePoisonModifier": 5.0,
+      "offensiveSlowPoisonModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao08_burncoldelectrocutedmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao08_burncoldelectrocutedmg.dbr",
+    "display_name": "冰冷伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveSlowColdModifier": 5.0,
+      "offensiveSlowFireModifier": 5.0,
+      "offensiveSlowLightningModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao09_aetherdmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao09_aetherdmg.dbr",
+    "display_name": "虚化伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveAetherModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao10_chaosdmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao10_chaosdmg.dbr",
+    "display_name": "混乱伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveChaosModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao13_lightningdmg.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao13_lightningdmg.dbr",
+    "display_name": "闪电伤害(3-7%)",
+    "description": "5%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0,
+      "offensiveLightningModifier": 5.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad102_stunresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad102_stunresist.dbr",
+    "display_name": "眩晕抗性(4-12%)",
+    "description": "",
+    "stats": {
+      "defensiveStun": 8.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad101_blockdamage.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad101_blockdamage.dbr",
+    "display_name": "盾挡值(2-6%)",
+    "description": "",
+    "stats": {
+      "defensiveBlockAmountModifier": 4.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad103_freezeresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad103_freezeresist.dbr",
+    "display_name": "冻结抗性(4-12%)",
+    "description": "",
+    "stats": {
+      "defensiveFreeze": 8.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad104_poisonresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad104_poisonresist.dbr",
+    "display_name": "毒酸抗性(2-4%)",
+    "description": "",
+    "stats": {
+      "defensivePoison": 3.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao101_crit.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao101_crit.dbr",
+    "display_name": "暴击伤害(1-3%)",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0,
+      "offensiveCritDamageModifier": 2.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao102_energyregen.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao102_energyregen.dbr",
+    "display_name": "能量回复(5-11%)",
+    "description": "",
+    "stats": {
+      "characterManaRegenModifier": 8.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 40.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ac202_spirit.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac202_spirit.dbr",
+    "display_name": "精神(2-4%)",
+    "description": "3%",
+    "stats": {
+      "characterIntelligenceModifier": 3.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 35.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ac204_runspeed.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac204_runspeed.dbr",
+    "display_name": "移动速度(1-3%)",
+    "description": "2%",
+    "stats": {
+      "characterRunSpeedModifier": 2.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad201_slowresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad201_slowresist.dbr",
+    "display_name": "减速抗性(4-12%)",
+    "description": "3%",
+    "stats": {
+      "defensiveTotalSpeedResistance": 8.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ac201_retal.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac201_retal.dbr",
+    "display_name": "反击伤害(8-12%)",
+    "description": "10%",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 20.0,
+      "retaliationTotalDamageModifier": 10.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ac203_healing.dbr": {
+    "path": "records/items/lootaffixes/crafting/ac203_healing.dbr",
+    "display_name": "治疗加成(2-4%)",
+    "description": "3%",
+    "stats": {
+      "characterHealIncreasePercent": 3.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 35.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ad202_reflectresist.dbr": {
+    "path": "records/items/lootaffixes/crafting/ad202_reflectresist.dbr",
+    "display_name": "反弹抗性(2-6%)",
+    "description": "4%",
+    "stats": {
+      "defensivePercentReflectionResistance": 4.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 50.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao306_poison.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao306_poison.dbr",
+    "display_name": "毒素伤害",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 20.0,
+      "offensiveSlowPoisonDurationModifier": 30.0,
+      "offensiveSlowPoisonModifier": 15.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao302_burn.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao302_burn.dbr",
+    "display_name": "燃烧伤害",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 20.0,
+      "offensiveSlowFireDurationModifier": 30.0,
+      "offensiveSlowFireModifier": 15.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao312_crit.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao312_crit.dbr",
+    "display_name": "暴击伤害(1-3%)",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 25.0,
+      "offensiveCritDamageModifier": 2.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao305_bleed.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao305_bleed.dbr",
+    "display_name": "流血伤害",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 20.0,
+      "offensiveSlowBleedingDurationModifier": 30.0,
+      "offensiveSlowBleedingModifier": 15.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao304_vitalitydecay.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao304_vitalitydecay.dbr",
+    "display_name": "活力衰减",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 20.0,
+      "offensiveSlowLifeDurationModifier": 30.0,
+      "offensiveSlowLifeModifier": 15.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao303_electrocute.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao303_electrocute.dbr",
+    "display_name": "电击伤害",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 20.0,
+      "offensiveSlowLightningDurationModifier": 30.0,
+      "offensiveSlowLightningModifier": 15.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao301_frostburn.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao301_frostburn.dbr",
+    "display_name": "霜燃伤害",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 20.0,
+      "offensiveSlowColdDurationModifier": 30.0,
+      "offensiveSlowColdModifier": 15.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao307_health.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao307_health.dbr",
+    "display_name": "生命值(60-100)",
+    "description": "",
+    "stats": {
+      "characterLife": 80.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 25.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao308_da.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao308_da.dbr",
+    "display_name": "防御能力(9-15)",
+    "description": "",
+    "stats": {
+      "characterDefensiveAbility": 12.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 25.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao309_oa.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao309_oa.dbr",
+    "display_name": "攻击能力(9-15)",
+    "description": "",
+    "stats": {
+      "characterOffensiveAbility": 12.0,
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 25.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao310_poison.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao310_poison.dbr",
+    "display_name": "毒素伤害",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 25.0,
+      "offensiveSlowPoisonModifier": 20.0
+    }
+  },
+  "records/items/lootaffixes/crafting/ao311_acid.dbr": {
+    "path": "records/items/lootaffixes/crafting/ao311_acid.dbr",
+    "display_name": "酸性伤害(21-35%)",
+    "description": "",
+    "stats": {
+      "levelRequirement": 1,
+      "lootRandomizerJitter": 25.0,
+      "offensivePoisonModifier": 20.0
+    }
+  }
+}
