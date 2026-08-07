@@ -200,18 +200,19 @@ def _ascended_affix_record(value: object) -> str:
         ) from exc
 
 
-def _blank_item(rng: random.Random, item_data: dict | None = None) -> dict:
+def _blank_item(rng: random.Random, item_data: dict | None = None, forced_seed: int | None = None) -> dict:
     data = item_data or {}
     component = str(data.get("component", ""))
     augment = str(data.get("augment", ""))
     ascendant = _ascended_affix_record(data.get("ascendedAffix", ""))
+    seed_value = forced_seed if forced_seed is not None else rng.randrange(1, 0x7FFFFFFF)
     return {
         "basename": str(data.get("item", "")),
         "prefix_name": str(data.get("prefix", "")),
         "suffix_name": str(data.get("suffix", "")),
         "modifier_name": "",
         "transmute_name": "",
-        "seed": rng.randrange(1, 0x7FFFFFFF),
+        "seed": seed_value,
         "relic_name": component,
         "relic_bonus": str(data.get("relicBonus", "")),
         "relic_seed": rng.randrange(1, 0x7FFFFFFF) if component else 0,
@@ -228,19 +229,21 @@ def _blank_item(rng: random.Random, item_data: dict | None = None) -> dict:
 
 
 def _apply_equipment(
-    block3: Block3Data, equipment: dict, rng: random.Random, warnings: list[str]
+    block3: Block3Data, equipment: dict, rng: random.Random, warnings: list[str],
+    slot_seeds: dict[str, int] | None = None,
 ) -> int:
     if not block3.has_data or not isinstance(block3.tail, dict):
         raise GenerationError("模板存档没有可写入的装备数据")
 
     for slot, location in EQUIPMENT_SLOTS.items():
-        item = _blank_item(rng, equipment.get(slot))
+        forced = (slot_seeds or {}).get(slot)
+        item = _blank_item(rng, equipment.get(slot), forced_seed=forced)
         if location[0] == "equipment":
             block3.tail["equipment"][location[1]] = item
         else:
             block3.tail["weapon_sets"][location[1]]["items"][location[2]] = item
 
-    _clear_2h_offhand(equipment, rng, block3.tail["weapon_sets"])
+    _clear_2h_offhand(equipment, rng, block3.tail["weapon_sets"], slot_seeds)
 
     if any(item.get("ascendedAffix") for item in equipment.values()):
         warnings.append(
@@ -260,7 +263,8 @@ def _is_2h_weapon(item_path: str) -> bool:
 
 
 def _clear_2h_offhand(
-    equipment: dict, rng: random.Random, weapon_sets: list[dict]
+    equipment: dict, rng: random.Random, weapon_sets: list[dict],
+    slot_seeds: dict[str, int] | None = None,
 ) -> None:
     """双手武器占用双手，清除对应的副手槽位"""
     for set_index, main_slot, offhand_slot in (
@@ -269,7 +273,8 @@ def _clear_2h_offhand(
     ):
         main_weapon = equipment.get(main_slot, {}).get("item", "")
         if _is_2h_weapon(main_weapon):
-            weapon_sets[set_index]["items"][1] = _blank_item(rng)
+            forced = (slot_seeds or {}).get(offhand_slot)
+            weapon_sets[set_index]["items"][1] = _blank_item(rng, forced_seed=forced)
 
 
 def _skill_prototype_map(skill_block: dict) -> dict[str, dict]:
@@ -383,7 +388,8 @@ def _clean_hotslots(save: CharacterSave) -> None:
 
 
 def apply_build(
-    save: CharacterSave, build: GrimToolsBuild, character_name: str
+    save: CharacterSave, build: GrimToolsBuild, character_name: str,
+    slot_seeds: dict[str, int] | None = None,
 ) -> tuple[dict, list[str]]:
     warnings: list[str] = []
     data = build.data
@@ -416,7 +422,7 @@ def apply_build(
 
     rng = _seed_rng(build, character_name)
     equipment_count = _apply_equipment(
-        save.block(3).payload, data.get("equipment", {}), rng, warnings
+        save.block(3).payload, data.get("equipment", {}), rng, warnings, slot_seeds
     )
     skill_count, devotion_count = _apply_skills(
         save.block(8).payload, data.get("skills", []), warnings
@@ -446,6 +452,7 @@ def generate_save(
     template_directory: Path,
     output_root: Path,
     overwrite: bool = False,
+    slot_seeds: dict[str, int] | None = None,
 ) -> GenerationResult:
     name = validate_character_name(character_name)
     template = template_directory.resolve()
@@ -467,7 +474,7 @@ def generate_save(
 
     try:
         save = CharacterSave.load(output_directory / "player.gdc")
-        summary, warnings = apply_build(save, build, name)
+        summary, warnings = apply_build(save, build, name, slot_seeds)
         generated = save.to_bytes()
         verified = CharacterSave.from_bytes(generated)
         if verified.header.character_name != name:

@@ -11,7 +11,7 @@ import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
-from generator import GenerationError, generate_save, validate_character_name
+from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_character_name
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
 from license_manager import LicenseError, install_license, validate_license
@@ -19,6 +19,33 @@ from license_manager import LicenseError, install_license, validate_license
 
 APP_TITLE = "Grim Dawn 存档生成器"
 APP_TITLE_AND_AUTHOR = "Grim Dawn 存档生成器 ——by橙子"
+
+SLOT_LABELS: dict[str, str] = {
+    "weapon1": "武器1",
+    "weapon1Alt": "武器2",
+    "weapon2": "副手1",
+    "weapon2Alt": "副手2",
+    "amulet": "项链",
+    "ring1": "戒指1",
+    "ring2": "戒指2",
+    "head": "头盔",
+    "chest": "胸甲",
+    "shoulders": "护肩",
+    "hands": "护手",
+    "legs": "护腿",
+    "feet": "鞋子",
+    "waist": "腰带",
+    "relic": "圣物",
+    "medal": "勋章",
+}
+
+# 高级面板中的槽位排列顺序
+SLOT_ORDER = [
+    "weapon1", "weapon1Alt", "weapon2", "weapon2Alt",
+    "amulet", "ring1", "ring2",
+    "head", "chest", "shoulders", "hands", "legs", "feet", "waist",
+    "relic", "medal",
+]
 
 def ensure_activated(root: tk.Tk) -> bool:
     """Validate the local license or let the user import an author-issued one."""
@@ -114,16 +141,37 @@ class SaveGeneratorApp:
         self.last_output: Path | None = None
         self.running = False
         self.template_var = tk.StringVar()
-        self.template_placeholder = "可选择存档模板，未选时使用自带模板"
+        self.slot_seed_vars: dict[str, tk.StringVar] = {
+            slot: tk.StringVar() for slot in SLOT_ORDER
+        }
+        self.template_placeholder = "可选择存档模板，未选择时使用自带模板"
         self.template_placeholder_active = False
+        self.advanced_panel_visible = False
 
         root.title(APP_TITLE_AND_AUTHOR)
-        root.minsize(620, 410)
-        root.geometry("700x470")
+        root.minsize(660, 520)
         root.protocol("WM_DELETE_WINDOW", self._close)
 
-        frame = ttk.Frame(root, padding=20)
-        frame.pack(fill=tk.BOTH, expand=True)
+        # 窗口居中显示（先隐藏，设置好位置后再显示）
+        root.withdraw()
+        root.update_idletasks()
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        window_width = 660
+        window_height = 520
+        x = (screen_width - window_width) // 2
+        y = (screen_height - window_height) // 2
+        root.geometry(f"{window_width}x{window_height}+{x}+{y}")
+        root.deiconify()
+
+        # 主容器，左右布局
+        self.main_container = ttk.Frame(root)
+        self.main_container.pack(fill=tk.BOTH, expand=True)
+
+        # 左侧主面板（固定宽度，不跟随窗口拉伸）
+        frame = ttk.Frame(self.main_container, padding=20, width=620)
+        frame.pack(side=tk.LEFT, fill=tk.Y)
+        frame.pack_propagate(False)  # 保持固定宽度
         frame.columnconfigure(1, weight=1)
         frame.rowconfigure(5, weight=1)
 
@@ -134,7 +182,11 @@ class SaveGeneratorApp:
         ttk.Label(frame, text="模拟器链接：").grid(row=1, column=0, sticky=tk.W, pady=6)
         self.link_var = tk.StringVar(value="https://www.grimtools.com/calc/")
         self.link_entry = ttk.Entry(frame, textvariable=self.link_var)
-        self.link_entry.grid(row=1, column=1, columnspan=2, sticky=tk.EW, pady=6)
+        self.link_entry.grid(row=1, column=1, sticky=tk.EW, pady=6)
+        self.advanced_button = ttk.Button(
+            frame, text="高级", command=self._toggle_advanced_panel
+        )
+        self.advanced_button.grid(row=1, column=2, sticky=tk.W, padx=(6, 0), pady=6)
 
         ttk.Label(frame, text="角色名称：").grid(row=2, column=0, sticky=tk.W, pady=6)
         self.name_var = tk.StringVar()
@@ -191,6 +243,44 @@ class SaveGeneratorApp:
             foreground="#555555",
         ).grid(row=6, column=0, columnspan=3, sticky=tk.W, pady=(10, 0))
 
+        # 右侧高级面板（初始隐藏）
+        self.advanced_panel = ttk.LabelFrame(
+            self.main_container, text="装备种子（留空随机生成）", padding=10
+        )
+        self.slot_seed_entries: dict[str, ttk.Entry] = {}
+
+        # 用 Canvas + Scrollbar 实现可滚动的种子面板
+        canvas = tk.Canvas(self.advanced_panel, highlightthickness=0, width=200)
+        scrollbar_adv = ttk.Scrollbar(self.advanced_panel, orient=tk.VERTICAL, command=canvas.yview)
+        scroll_frame = ttk.Frame(canvas)
+        scroll_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all")),
+        )
+        canvas.create_window((0, 0), window=scroll_frame, anchor=tk.NW)
+        canvas.configure(yscrollcommand=scrollbar_adv.set)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar_adv.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # 鼠标滚轮支持
+        def _on_mousewheel(event: tk.Event) -> None:
+            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+        canvas.bind_all("<MouseWheel>", _on_mousewheel)
+
+        for i, slot in enumerate(SLOT_ORDER):
+            label_text = SLOT_LABELS.get(slot, slot)
+            ttk.Label(scroll_frame, text=f"{label_text}：").grid(
+                row=i, column=0, sticky=tk.W, pady=2, padx=(0, 4)
+            )
+            entry = ttk.Entry(
+                scroll_frame, textvariable=self.slot_seed_vars[slot], width=14
+            )
+            entry.grid(row=i, column=1, sticky=tk.EW, pady=2)
+            self.slot_seed_entries[slot] = entry
+        scroll_frame.columnconfigure(1, weight=1)
+
+
+
         root.after(100, self._process_events)
         self.link_entry.selection_range(0, tk.END)
         self.link_entry.focus_set()
@@ -227,6 +317,19 @@ class SaveGeneratorApp:
         """模板输入框失去焦点时"""
         if not self.template_var.get():
             self._show_template_placeholder()
+
+    def _toggle_advanced_panel(self) -> None:
+        """切换高级面板的显示/隐藏"""
+        if self.advanced_panel_visible:
+            self.advanced_panel.pack_forget()
+            self.advanced_panel_visible = False
+            self.root.update_idletasks()
+            self.root.geometry("660x520")
+        else:
+            self.root.geometry("840x520")
+            self.root.update_idletasks()
+            self.advanced_panel.pack(side=tk.RIGHT, fill=tk.BOTH, padx=(0, 10), pady=20)
+            self.advanced_panel_visible = True
 
     def _browse_template(self) -> None:
         """打开文件对话框选择模板目录"""
@@ -279,6 +382,10 @@ class SaveGeneratorApp:
         self.name_entry.configure(state=tk.DISABLED if running else tk.NORMAL)
         self.template_entry.configure(state=tk.DISABLED if running else tk.NORMAL)
         self.template_browse_button.configure(state=tk.DISABLED if running else tk.NORMAL)
+        self.advanced_button.configure(state=tk.DISABLED if running else tk.NORMAL)
+        entry_state = tk.DISABLED if running else tk.NORMAL
+        for entry in self.slot_seed_entries.values():
+            entry.configure(state=entry_state)
         if running:
             self.open_button.configure(state=tk.DISABLED)
             self.progress["value"] = 0
@@ -338,19 +445,37 @@ class SaveGeneratorApp:
             if not overwrite:
                 return
 
+        # 解析各槽位的用户输入种子
+        slot_seeds: dict[str, int] = {}
+        for slot in SLOT_ORDER:
+            raw = self.slot_seed_vars[slot].get().strip()
+            if not raw:
+                continue
+            try:
+                slot_seeds[slot] = int(raw)
+            except ValueError:
+                label = SLOT_LABELS.get(slot, slot)
+                messagebox.showwarning(
+                    APP_TITLE,
+                    f"「{label}」的随机种子必须是整数。",
+                    parent=self.root,
+                )
+                self.slot_seed_entries[slot].focus_set()
+                return
+
         self.last_output = None
         self._clear_log()
         self._set_running(True)
         is_default_template = (template_path == resource_directory() / "_template")
         worker = threading.Thread(
             target=self._generate,
-            args=(link, name, template_path, is_default_template, output_root, overwrite),
+            args=(link, name, template_path, is_default_template, output_root, overwrite, slot_seeds or None),
             daemon=True,
         )
         worker.start()
 
     def _generate(
-        self, link: str, name: str, template_directory: Path, is_default_template: bool, output_root: Path, overwrite: bool
+        self, link: str, name: str, template_directory: Path, is_default_template: bool, output_root: Path, overwrite: bool, slot_seeds: dict[str, int] | None
     ) -> None:
         try:
             self.events.put(("progress", 10))
@@ -363,6 +488,9 @@ class SaveGeneratorApp:
                 self.events.put(("log", "      使用默认模板"))
             else:
                 self.events.put(("log", f"      使用自定义模板: {template_directory}"))
+            if slot_seeds:
+                labels = [SLOT_LABELS.get(s, s) for s in slot_seeds]
+                self.events.put(("log", f"      使用自定义种子部位: {', '.join(labels)}"))
             
             self.events.put(("progress", 30))
             self.events.put(("log", "[2/4] 正在复制模板并写入角色数据……"))
@@ -372,6 +500,7 @@ class SaveGeneratorApp:
                 template_directory,
                 output_root,
                 overwrite=overwrite,
+                slot_seeds=slot_seeds,
             )
             
             self.events.put(("progress", 70))
@@ -454,7 +583,6 @@ def main() -> int:
     if not ensure_activated(root):
         root.destroy()
         return 1
-    root.deiconify()
     SaveGeneratorApp(root)
     root.mainloop()
     return 0
