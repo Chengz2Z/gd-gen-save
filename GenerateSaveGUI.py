@@ -236,9 +236,6 @@ class SaveGeneratorApp:
         )
         self.keep_iron_check.pack(side=tk.LEFT)
 
-        # 加载保存的配置
-        self._load_config()
-
         ttk.Label(frame, text="模板目录：").grid(row=4, column=0, sticky=tk.W, pady=6)
         self.template_entry = ttk.Entry(frame, textvariable=self.template_var)
         self.template_entry.grid(row=4, column=1, sticky=tk.EW, pady=6)
@@ -263,6 +260,9 @@ class SaveGeneratorApp:
         self.output_placeholder = "默认输出到工具目录下的 output 文件夹"
         self.output_placeholder_active = False
         self._setup_output_placeholder()
+
+        # 加载保存的配置（必须在所有变量初始化之后）
+        self._load_config()
 
         button_frame = ttk.Frame(frame)
         button_frame.grid(row=6, column=0, columnspan=3, sticky=tk.EW, pady=6)
@@ -412,12 +412,18 @@ class SaveGeneratorApp:
                 saved_template = config.get("template_directory", "")
                 if saved_template:
                     self.template_var.set(saved_template)
-                    self._hide_template_placeholder()
+                    self.template_entry.delete(0, tk.END)
+                    self.template_entry.insert(0, saved_template)
+                    self.template_placeholder_active = False
+                    self.template_entry.configure(foreground="black")
                 # 加载输出目录
                 saved_output = config.get("output_directory", "")
                 if saved_output:
                     self.output_var.set(saved_output)
-                    self._hide_output_placeholder()
+                    self.output_entry.delete(0, tk.END)
+                    self.output_entry.insert(0, saved_output)
+                    self.output_placeholder_active = False
+                    self.output_entry.configure(foreground="black")
             self._update_remember_button_text()
         except (json.JSONDecodeError, OSError):
             pass
@@ -476,6 +482,11 @@ class SaveGeneratorApp:
             self.template_placeholder_active = False
             self.template_entry.configure(foreground="black")
             self.template_entry.delete(0, tk.END)
+        # 如果有保存的值，恢复显示（无论占位符是否激活）
+        saved_value = self.template_var.get()
+        if saved_value:
+            self.template_entry.delete(0, tk.END)
+            self.template_entry.insert(0, saved_value)
 
     def _on_template_focus_in(self, event) -> None:
         """模板输入框获得焦点时"""
@@ -578,6 +589,11 @@ class SaveGeneratorApp:
             self.output_placeholder_active = False
             self.output_entry.configure(foreground="black")
             self.output_entry.delete(0, tk.END)
+        # 如果有保存的值，恢复显示（无论占位符是否激活）
+        saved_value = self.output_var.get()
+        if saved_value:
+            self.output_entry.delete(0, tk.END)
+            self.output_entry.insert(0, saved_value)
 
     def _on_output_focus_in(self, event) -> None:
         """输出目录输入框获得焦点时"""
