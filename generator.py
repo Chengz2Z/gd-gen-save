@@ -406,10 +406,48 @@ def _clean_hotslots(save: CharacterSave) -> None:
             block["hotslots"][index] = {"type": -1}
 
 
+# 材料类物品的路径前缀
+MATERIAL_PREFIXES = (
+    "records/items/crafting/",
+    "records/items/materia/",
+    "records/items/enchants/",
+    "records/endlessdungeon/items/",
+    "records/items/misc/potions/",
+    "records/items/questitems/",
+    "records/items/rewards/",
+)
+
+
+def _is_material_item(item: dict) -> bool:
+    """判断物品是否为材料类物品"""
+    basename = item.get("basename", "")
+    return any(basename.startswith(prefix) for prefix in MATERIAL_PREFIXES)
+
+
+def _clear_inventory_materials(save: CharacterSave) -> int:
+    """清空背包中的材料类物品，返回清空的物品数量"""
+    block3 = save.block(3).payload
+    if not block3.has_data:
+        return 0
+    
+    cleared_count = 0
+    for sack in block3.sacks:
+        items = sack.payload.get("items", [])
+        # 过滤掉材料类物品
+        original_count = len(items)
+        sack.payload["items"] = [item for item in items if not _is_material_item(item)]
+        cleared_count += original_count - len(sack.payload["items"])
+    
+    return cleared_count
+
+
 def apply_build(
     save: CharacterSave, build: GrimToolsBuild, character_name: str,
     slot_seeds: dict[str, int] | None = None,
     slot_crafting: dict[str, str] | None = None,
+    male: bool = True,
+    keep_materials: bool = True,
+    keep_iron: bool = True,
 ) -> tuple[dict, list[str]]:
     warnings: list[str] = []
     data = build.data
@@ -423,6 +461,7 @@ def apply_build(
 
     save.header.character_name = character_name
     save.header.character_level = level
+    save.header.male = male
     class_tag = _class_tag(build.masteries)
     if class_tag:
         save.header.player_class_name = class_tag
@@ -454,6 +493,18 @@ def apply_build(
         warnings.append("构筑包含物品自动技能；装备会赋予技能，但快捷栏未自动配置。")
     if data.get("transformSkills"):
         warnings.append("构筑包含技能变形配置；当前版本未单独写入变形状态。")
+    
+    # 处理铁币
+    block1 = save.block(1).payload
+    if not keep_iron:
+        import random as _random
+        random_iron = _random.randint(10000, 99999)
+        block1["iron"] = random_iron
+    
+    # 清空背包材料
+    if not keep_materials:
+        _clear_inventory_materials(save)
+    
     _clean_hotslots(save)
     save.block(16).payload["max_level"] = max(
         level, int(save.block(16).payload["max_level"])
@@ -475,6 +526,9 @@ def generate_save(
     overwrite: bool = False,
     slot_seeds: dict[str, int] | None = None,
     slot_crafting: dict[str, str] | None = None,
+    male: bool = True,
+    keep_materials: bool = True,
+    keep_iron: bool = True,
 ) -> GenerationResult:
     name = validate_character_name(character_name)
     template = template_directory.resolve()
@@ -496,7 +550,9 @@ def generate_save(
 
     try:
         save = CharacterSave.load(output_directory / "player.gdc")
-        summary, warnings = apply_build(save, build, name, slot_seeds, slot_crafting)
+        summary, warnings = apply_build(
+            save, build, name, slot_seeds, slot_crafting, male, keep_materials, keep_iron
+        )
         generated = save.to_bytes()
         verified = CharacterSave.from_bytes(generated)
         if verified.header.character_name != name:

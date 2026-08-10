@@ -181,10 +181,10 @@ class SaveGeneratorApp:
         frame.pack(side=tk.LEFT, fill=tk.Y)
         frame.pack_propagate(False)  # 保持固定宽度
         frame.columnconfigure(1, weight=1)
-        frame.rowconfigure(5, weight=1)
+        frame.rowconfigure(7, weight=1)  # 日志框行可拉伸
 
         ttk.Label(frame, text=APP_TITLE, font=("Microsoft YaHei UI", 16, "bold")).grid(
-            row=0, column=0, columnspan=3, sticky=tk.W, pady=(0, 18)
+            row=0, column=0, columnspan=3, sticky=tk.W, pady=(0, 6)
         )
 
         ttk.Label(frame, text="模拟器链接：").grid(row=1, column=0, sticky=tk.W, pady=6)
@@ -209,22 +209,63 @@ class SaveGeneratorApp:
         )
         self.remember_name_button.grid(row=2, column=2, sticky=tk.W, padx=(6, 0), pady=6)
 
+        # 性别和材料选项行
+        options_frame = ttk.Frame(frame)
+        options_frame.grid(row=3, column=0, columnspan=3, sticky=tk.W, pady=6)
+        
+        ttk.Label(options_frame, text="角色性别：").pack(side=tk.LEFT, padx=(0, 10))
+        self.gender_var = tk.StringVar(value="male")
+        self.male_radio = ttk.Radiobutton(
+            options_frame, text="男", variable=self.gender_var, value="male"
+        )
+        self.male_radio.pack(side=tk.LEFT, padx=(0, 10))
+        self.female_radio = ttk.Radiobutton(
+            options_frame, text="女", variable=self.gender_var, value="female"
+        )
+        self.female_radio.pack(side=tk.LEFT, padx=(0, 20))
+        
+        self.keep_materials_var = tk.BooleanVar(value=True)
+        self.keep_materials_check = ttk.Checkbutton(
+            options_frame, text="常用材料", variable=self.keep_materials_var
+        )
+        self.keep_materials_check.pack(side=tk.LEFT, padx=(0, 15))
+        
+        self.keep_iron_var = tk.BooleanVar(value=True)
+        self.keep_iron_check = ttk.Checkbutton(
+            options_frame, text="铁币", variable=self.keep_iron_var
+        )
+        self.keep_iron_check.pack(side=tk.LEFT)
+
         # 加载保存的配置
         self._load_config()
 
-        ttk.Label(frame, text="模板目录：").grid(row=3, column=0, sticky=tk.W, pady=6)
+        ttk.Label(frame, text="模板目录：").grid(row=4, column=0, sticky=tk.W, pady=6)
         self.template_entry = ttk.Entry(frame, textvariable=self.template_var)
-        self.template_entry.grid(row=3, column=1, sticky=tk.EW, pady=6)
+        self.template_entry.grid(row=4, column=1, sticky=tk.EW, pady=6)
         self.template_browse_button = ttk.Button(
             frame, text="浏览", command=self._browse_template
         )
-        self.template_browse_button.grid(row=3, column=2, sticky=tk.W, padx=(6, 0), pady=6)
+        self.template_browse_button.grid(row=4, column=2, sticky=tk.W, padx=(6, 0), pady=6)
         
         # 设置占位符提示
         self._setup_template_placeholder()
 
+        ttk.Label(frame, text="输出目录：").grid(row=5, column=0, sticky=tk.W, pady=6)
+        self.output_var = tk.StringVar()
+        self.output_entry = ttk.Entry(frame, textvariable=self.output_var)
+        self.output_entry.grid(row=5, column=1, sticky=tk.EW, pady=6)
+        self.output_browse_button = ttk.Button(
+            frame, text="浏览", command=self._browse_output
+        )
+        self.output_browse_button.grid(row=5, column=2, sticky=tk.W, padx=(6, 0), pady=6)
+        
+        # 设置输出目录占位符
+        self.output_placeholder = "默认输出到工具目录下的 output 文件夹"
+        self.output_placeholder_active = False
+        self._setup_output_placeholder()
+
         button_frame = ttk.Frame(frame)
-        button_frame.grid(row=4, column=0, columnspan=3, sticky=tk.EW, pady=(12, 12))
+        button_frame.grid(row=6, column=0, columnspan=3, sticky=tk.EW, pady=6)
         self.generate_button = ttk.Button(
             button_frame, text="生成角色存档", command=self.start_generation
         )
@@ -240,12 +281,12 @@ class SaveGeneratorApp:
         self.progress.pack(side=tk.RIGHT, fill=tk.X, expand=True, padx=(20, 0))
 
         log_frame = ttk.LabelFrame(frame, text="生成日志", padding=8)
-        log_frame.grid(row=5, column=0, columnspan=3, sticky=tk.NSEW)
+        log_frame.grid(row=7, column=0, columnspan=3, sticky=tk.NSEW, pady=6)
         log_frame.columnconfigure(0, weight=1)
         log_frame.rowconfigure(0, weight=1)
         self.log = tk.Text(
             log_frame,
-            height=13,
+            height=10,
             wrap=tk.WORD,
             state=tk.DISABLED,
             font=("Microsoft YaHei UI", 9),
@@ -259,7 +300,7 @@ class SaveGeneratorApp:
             frame,
             text="本软件仅供内部测试人员使用，禁止传播！如果您通过付费或其它方式获取本软件，请立即删除并举报相关渠道。",
             foreground="#555555",
-        ).grid(row=6, column=0, columnspan=3, sticky=tk.W, pady=(10, 0))
+        ).grid(row=8, column=0, columnspan=3, sticky=tk.W, pady=(10, 0))
 
         # 右侧高级面板（初始隐藏）
         self.advanced_panel = ttk.LabelFrame(
@@ -360,6 +401,23 @@ class SaveGeneratorApp:
                 if remember and saved_name:
                     self.name_var.set(saved_name)
                     self.remember_name_var.set(True)
+                # 加载性别和材料选项
+                gender = config.get("gender", "male")
+                self.gender_var.set(gender)
+                keep_materials = config.get("keep_materials", True)
+                self.keep_materials_var.set(keep_materials)
+                keep_iron = config.get("keep_iron", True)
+                self.keep_iron_var.set(keep_iron)
+                # 加载模板目录
+                saved_template = config.get("template_directory", "")
+                if saved_template:
+                    self.template_var.set(saved_template)
+                    self._hide_template_placeholder()
+                # 加载输出目录
+                saved_output = config.get("output_directory", "")
+                if saved_output:
+                    self.output_var.set(saved_output)
+                    self._hide_output_placeholder()
             self._update_remember_button_text()
         except (json.JSONDecodeError, OSError):
             pass
@@ -374,6 +432,18 @@ class SaveGeneratorApp:
             config["remember_name"] = self.remember_name_var.get()
             if self.remember_name_var.get():
                 config["character_name"] = self.name_var.get().strip()
+            # 保存性别和材料选项
+            config["gender"] = self.gender_var.get()
+            config["keep_materials"] = self.keep_materials_var.get()
+            config["keep_iron"] = self.keep_iron_var.get()
+            # 保存模板目录
+            template_input = self.template_var.get().strip()
+            if template_input and not self.template_placeholder_active:
+                config["template_directory"] = template_input
+            # 保存输出目录
+            output_input = self.output_var.get().strip()
+            if output_input and not self.output_placeholder_active:
+                config["output_directory"] = output_input
             with open(CONFIG_FILE, "w", encoding="utf-8") as f:
                 json.dump(config, f, ensure_ascii=False, indent=2)
         except OSError:
@@ -463,6 +533,62 @@ class SaveGeneratorApp:
             self._hide_template_placeholder()
             self.template_var.set(str(template_path))
 
+    def _browse_output(self) -> None:
+        """打开文件对话框选择输出目录"""
+        current_output = self.output_var.get()
+        # 如果当前显示的是占位符或为空，使用用户文档目录作为初始目录
+        if not current_output or self.output_placeholder_active:
+            # 使用用户的文档目录，如果不存在则使用用户主目录
+            documents_dir = Path.home() / "Documents"
+            if not documents_dir.is_dir():
+                documents_dir = Path.home()
+            initial_dir = str(documents_dir)
+        else:
+            initial_dir = str(Path(current_output).parent)
+        
+        directory = filedialog.askdirectory(
+            title="选择输出目录",
+            initialdir=initial_dir,
+            parent=self.root,
+        )
+        
+        if directory:
+            # 隐藏占位符并设置选择的路径
+            self._hide_output_placeholder()
+            self.output_var.set(str(directory))
+
+    def _setup_output_placeholder(self) -> None:
+        """设置输出目录输入框的占位符提示"""
+        self.output_entry.bind("<FocusIn>", self._on_output_focus_in)
+        self.output_entry.bind("<FocusOut>", self._on_output_focus_out)
+        # 初始显示占位符
+        self._show_output_placeholder()
+
+    def _show_output_placeholder(self) -> None:
+        """显示输出目录占位符提示"""
+        if not self.output_var.get() and not self.output_placeholder_active:
+            self.output_placeholder_active = True
+            self.output_entry.configure(foreground="gray")
+            self.output_entry.delete(0, tk.END)
+            self.output_entry.insert(0, self.output_placeholder)
+
+    def _hide_output_placeholder(self) -> None:
+        """隐藏输出目录占位符提示"""
+        if self.output_placeholder_active:
+            self.output_placeholder_active = False
+            self.output_entry.configure(foreground="black")
+            self.output_entry.delete(0, tk.END)
+
+    def _on_output_focus_in(self, event) -> None:
+        """输出目录输入框获得焦点时"""
+        if self.output_placeholder_active:
+            self._hide_output_placeholder()
+
+    def _on_output_focus_out(self, event) -> None:
+        """输出目录输入框失去焦点时"""
+        if not self.output_var.get():
+            self._show_output_placeholder()
+
     def _append_log(self, text: str) -> None:
         self.log.configure(state=tk.NORMAL)
         self.log.insert(tk.END, text.rstrip() + "\n")
@@ -516,6 +642,8 @@ class SaveGeneratorApp:
         # 如果输入框显示占位符或为空，使用默认模板
         if not template_input or self.template_placeholder_active:
             template_path = resource_directory() / "_template"
+            # 恢复占位符显示
+            self._show_template_placeholder()
         else:
             template_path = Path(template_input)
             if not template_path.is_dir():
@@ -535,7 +663,24 @@ class SaveGeneratorApp:
                 self.template_entry.focus_set()
                 return
 
-        output_root = writable_directory() / "output"
+        # 验证输出目录
+        output_input = self.output_var.get().strip()
+        # 如果输入框显示占位符或为空，使用默认输出目录
+        if not output_input or self.output_placeholder_active:
+            output_root = writable_directory() / "output"
+            # 恢复占位符显示
+            self._show_output_placeholder()
+        else:
+            output_root = Path(output_input)
+            if not output_root.is_dir():
+                messagebox.showwarning(
+                    APP_TITLE,
+                    f"输出目录不存在：\n{output_root}",
+                    parent=self.root,
+                )
+                self.output_entry.focus_set()
+                return
+
         output_directory = output_root / f"_{name}"
         overwrite = False
         if output_directory.exists():
@@ -581,15 +726,18 @@ class SaveGeneratorApp:
         self._clear_log()
         self._set_running(True)
         is_default_template = (template_path == resource_directory() / "_template")
+        gender = self.gender_var.get()
+        keep_materials = self.keep_materials_var.get()
+        keep_iron = self.keep_iron_var.get()
         worker = threading.Thread(
             target=self._generate,
-            args=(link, name, template_path, is_default_template, output_root, overwrite, slot_seeds or None, slot_crafting or None),
+            args=(link, name, template_path, is_default_template, output_root, overwrite, slot_seeds or None, slot_crafting or None, gender, keep_materials, keep_iron),
             daemon=True,
         )
         worker.start()
 
     def _generate(
-        self, link: str, name: str, template_directory: Path, is_default_template: bool, output_root: Path, overwrite: bool, slot_seeds: dict[str, int] | None, slot_crafting: dict[str, str] | None
+        self, link: str, name: str, template_directory: Path, is_default_template: bool, output_root: Path, overwrite: bool, slot_seeds: dict[str, int] | None, slot_crafting: dict[str, str] | None, gender: str = "male", keep_materials: bool = True, keep_iron: bool = True
     ) -> None:
         try:
             self.events.put(("progress", 10))
@@ -619,6 +767,9 @@ class SaveGeneratorApp:
                 overwrite=overwrite,
                 slot_seeds=slot_seeds,
                 slot_crafting=slot_crafting,
+                male=(gender == "male"),
+                keep_materials=keep_materials,
+                keep_iron=keep_iron,
             )
             
             self.events.put(("progress", 70))

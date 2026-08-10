@@ -59,6 +59,22 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--force", action="store_true", help="覆盖同名的已生成角色目录"
     )
+    parser.add_argument(
+        "--gender",
+        choices=["male", "female"],
+        default="male",
+        help="角色性别（默认：male）",
+    )
+    parser.add_argument(
+        "--no-materials",
+        action="store_true",
+        help="清空背包中的材料类物品",
+    )
+    parser.add_argument(
+        "--no-iron",
+        action="store_true",
+        help="随机生成5位数铁币（不使用模板铁币数）",
+    )
     return parser
 
 
@@ -79,6 +95,9 @@ def main(argv: list[str] | None = None) -> int:
             args.template,
             args.output,
             overwrite=args.force,
+            male=(args.gender == "male"),
+            keep_materials=not args.no_materials,
+            keep_iron=not args.no_iron,
         )
         print("[3/4] 已完成解密后回读校验。")
         print("[4/4] 角色存档生成成功：")
