@@ -2,21 +2,37 @@
 setlocal
 cd /d "%~dp0"
 
+set "MODE=%~1"
+if "%MODE%"=="" set "MODE=licensed"
+
+if /i "%MODE%"=="licensed" (
+  set "ENTRY=GenerateSaveGUI.py"
+  set "APP_NAME=GenerateSave"
+  set "DIST_DIR=dist"
+) else if /i "%MODE%"=="free" (
+  set "ENTRY=GenerateSaveGUIFree.py"
+  set "APP_NAME=GenerateSave-Free"
+  set "DIST_DIR=dist"
+) else (
+  echo Usage: build_exe.bat [licensed^|free]
+  exit /b 2
+)
+
 python -m PyInstaller --noconfirm --clean --onefile --windowed ^
-  --name GenerateSave ^
+  --name "%APP_NAME%" ^
   --add-data "_template;_template" ^
   --add-data "database;database" ^
-  --distpath "dist" ^
-  --workpath "build" ^
+  --distpath "%DIST_DIR%" ^
+  --workpath "build\%MODE%" ^
   --specpath "." ^
-  GenerateSaveGUI.py
+  "%ENTRY%"
 
 if errorlevel 1 (
   echo.
-  echo EXE build failed.
+  echo %MODE% EXE build failed.
   exit /b 1
 )
 
 echo.
-echo EXE created: %~dp0dist\GenerateSave.exe
+echo %MODE% EXE created: %~dp0%DIST_DIR%\%APP_NAME%.exe
 endlocal

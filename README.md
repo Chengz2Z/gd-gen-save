@@ -29,17 +29,21 @@
 直接运行：
 
 ```text
-dist/GenerateSave.exe
+dist/licensed/GenerateSave.exe
 ```
 
 填写 GrimTools 模拟器链接和角色名称，模板目录输入框显示提示"可选择存档模板，未选时使用自带模板"（可选择自定义模板目录，不选择则使用工具自带的 `_template` 模板），点击"生成角色存档"即可。模板已经打包进 EXE，结果保存在 EXE 同目录的 `output/_角色名称` 中。生成成功后，点击"打开输出目录"按钮会打开 `output` 目录（存档根目录），方便查看所有生成的存档。点击"浏览..."按钮选择模板目录时，默认打开用户的文档目录。
 
-如需重新构建 EXE，请先安装 PyInstaller，然后运行 `build_exe.bat`：
+如需重新构建 EXE，请先安装依赖，然后选择授权版或免授权版：
 
 ```powershell
 python -m pip install -r requirements.txt
-.\build_exe.bat
+.\build_exe.bat licensed
+.\build_exe.bat free
 ```
+
+- `licensed`（或不传参数）：生成 `dist\licensed\GenerateSave.exe`，启动时必须校验机器许可证。
+- `free`：生成 `dist\free\GenerateSave-Free.exe`，完全跳过许可证校验，窗口标题会标记“免授权版”。该版本一旦转发便可被任何人使用，应仅按需提供给可信人员。
 
 ### 命令行
 

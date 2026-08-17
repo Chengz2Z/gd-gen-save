@@ -20,6 +20,7 @@ from license_manager import LicenseError, default_license_path, install_license,
 
 APP_TITLE = "Grim Dawn 存档生成器"
 APP_TITLE_AND_AUTHOR = "Grim Dawn 存档生成器 ——by橙子"
+FREE_APP_TITLE = "Grim Dawn 存档生成器 免授权定制版"
 CONFIG_FILE = default_license_path().parent / "gui_config.json"
 
 SLOT_LABELS: dict[str, str] = {
@@ -137,7 +138,7 @@ def writable_directory() -> Path:
 
 
 class SaveGeneratorApp:
-    def __init__(self, root: tk.Tk):
+    def __init__(self, root: tk.Tk, window_title: str = APP_TITLE_AND_AUTHOR):
         self.root = root
         self.events: queue.Queue[tuple[str, object]] = queue.Queue()
         self.last_output: Path | None = None
@@ -156,7 +157,7 @@ class SaveGeneratorApp:
         self.template_placeholder_active = False
         self.advanced_panel_visible = False
 
-        root.title(APP_TITLE_AND_AUTHOR)
+        root.title(window_title)
         root.minsize(660, 560)
         root.protocol("WM_DELETE_WINDOW", self._close)
 
@@ -854,7 +855,7 @@ class SaveGeneratorApp:
         self.root.destroy()
 
 
-def main() -> int:
+def main(*, require_license: bool = True, window_title: str = APP_TITLE_AND_AUTHOR) -> int:
     if "--self-test" in sys.argv:
         template = resource_directory() / "_template"
         player_file = template / "player.gdc"
@@ -867,10 +868,10 @@ def main() -> int:
 
     root = tk.Tk()
     root.withdraw()
-    if not ensure_activated(root):
+    if require_license and not ensure_activated(root):
         root.destroy()
         return 1
-    SaveGeneratorApp(root)
+    SaveGeneratorApp(root, window_title=window_title)
     root.mainloop()
     return 0
 
