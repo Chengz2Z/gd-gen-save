@@ -2,16 +2,22 @@
 setlocal
 cd /d "%~dp0"
 
+for /f "usebackq delims=" %%V in (`python -c "from app_version import APP_VERSION; print(APP_VERSION)"`) do set "APP_VERSION=%%V"
+if not defined APP_VERSION (
+  echo Failed to read application version from app_version.py.
+  exit /b 1
+)
+
 set "MODE=%~1"
 if "%MODE%"=="" set "MODE=licensed"
 
 if /i "%MODE%"=="licensed" (
   set "ENTRY=GenerateSaveGUI.py"
-  set "APP_NAME=GenerateSave"
+  set "APP_NAME=GenerateSave-%APP_VERSION%"
   set "DIST_DIR=dist"
 ) else if /i "%MODE%"=="free" (
   set "ENTRY=GenerateSaveGUIFree.py"
-  set "APP_NAME=GenerateSave-Free"
+  set "APP_NAME=GenerateSave-Free-%APP_VERSION%"
   set "DIST_DIR=dist"
 ) else (
   echo Usage: build_exe.bat [licensed^|free]

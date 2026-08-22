@@ -12,6 +12,7 @@ import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
+from app_version import APP_VERSION
 from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_character_name, _load_crafting_bonus
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
@@ -19,8 +20,8 @@ from license_manager import LicenseError, default_license_path, install_license,
 
 
 APP_TITLE = "Grim Dawn 存档生成器"
-APP_TITLE_AND_AUTHOR = "Grim Dawn 存档生成器 ——by橙子"
-FREE_APP_TITLE = "Grim Dawn 存档生成器 免授权定制版"
+APP_TITLE_AND_AUTHOR = f"{APP_TITLE} {APP_VERSION} by橙子"
+FREE_APP_TITLE = f"{APP_TITLE} {APP_VERSION} 免授权定制版"
 CONFIG_FILE = default_license_path().parent / "gui_config.json"
 
 SLOT_LABELS: dict[str, str] = {
