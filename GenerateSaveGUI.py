@@ -333,7 +333,7 @@ class SaveGeneratorApp:
         ttk.Label(scroll_frame, text="槽位", font=("Microsoft YaHei UI", 9, "bold")).grid(
             row=0, column=0, sticky=tk.W, pady=(0, 4), padx=(0, 4)
         )
-        ttk.Label(scroll_frame, text="种子", font=("Microsoft YaHei UI", 9, "bold")).grid(
+        ttk.Label(scroll_frame, text="种子(HEX)", font=("Microsoft YaHei UI", 9, "bold")).grid(
             row=0, column=1, sticky=tk.W, pady=(0, 4), padx=(0, 4)
         )
         ttk.Label(scroll_frame, text="锻造奖励", font=("Microsoft YaHei UI", 9, "bold")).grid(
@@ -342,15 +342,18 @@ class SaveGeneratorApp:
 
         crafting_display_names = [opt[0] for opt in self.crafting_bonus_options]
 
+        # 输入验证：只允许十六进制字符（0-9, a-f, A-F）
+        hex_validate_cmd = (scroll_frame.register(self._validate_hex_input), "%P")
         for i, slot in enumerate(SLOT_ORDER):
             row = i + 1
             label_text = SLOT_LABELS.get(slot, slot)
             ttk.Label(scroll_frame, text=f"{label_text}：").grid(
                 row=row, column=0, sticky=tk.W, pady=2, padx=(0, 4)
             )
-            # 种子输入框
+            # 种子输入框（十六进制输入）
             entry = ttk.Entry(
-                scroll_frame, textvariable=self.slot_seed_vars[slot], width=12
+                scroll_frame, textvariable=self.slot_seed_vars[slot], width=10,
+                validate="key", validatecommand=hex_validate_cmd,
             )
             entry.grid(row=row, column=1, sticky=tk.EW, pady=2, padx=(0, 4))
             self.slot_seed_entries[slot] = entry
@@ -378,6 +381,16 @@ class SaveGeneratorApp:
         
         # 初始显示占位符
         self._show_template_placeholder()
+
+    @staticmethod
+    def _validate_hex_input(value: str) -> bool:
+        """验证输入是否为合法的十六进制格式"""
+        if not value:
+            return True
+        # 最多8位十六进制（最大值 0xFFFFFFFF）
+        if len(value) > 8:
+            return False
+        return all(c in "0123456789abcdefABCDEF" for c in value)
 
     def _build_crafting_options(self) -> list[tuple[str, str]]:
         """构建锻造奖励选项列表：(显示名称, 路径)"""
@@ -717,12 +730,15 @@ class SaveGeneratorApp:
             if not raw:
                 continue
             try:
-                slot_seeds[slot] = int(raw)
+                value = int(raw, 16)  # 十六进制
+                if value < 0 or value > 0xFFFFFFFF:
+                    raise ValueError("超出范围")
+                slot_seeds[slot] = value
             except ValueError:
                 label = SLOT_LABELS.get(slot, slot)
                 messagebox.showwarning(
                     APP_TITLE,
-                    f"「{label}」的随机种子必须是整数。",
+                    f"「{label}」的随机种子格式无效。\n请输入0到FFFFFFFF之间的十六进制数。",
                     parent=self.root,
                 )
                 self.slot_seed_entries[slot].focus_set()
