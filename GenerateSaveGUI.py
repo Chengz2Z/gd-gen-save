@@ -17,31 +17,40 @@ from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
 from license_manager import LicenseError, default_license_path, install_license, validate_license
+from i18n import LanguageManager
 
 
-APP_TITLE = "Grim Dawn 存档生成器"
-APP_TITLE_AND_AUTHOR = f"{APP_TITLE} {APP_VERSION} by橙子"
-FREE_APP_TITLE = f"{APP_TITLE} {APP_VERSION} 免授权定制版"
 CONFIG_FILE = default_license_path().parent / "gui_config.json"
+I18N = LanguageManager(CONFIG_FILE)
 
-SLOT_LABELS: dict[str, str] = {
-    "weapon1": "武器1",
-    "weapon1Alt": "武器2",
-    "weapon2": "副手1",
-    "weapon2Alt": "副手2",
-    "amulet": "项链",
-    "ring1": "戒指1",
-    "ring2": "戒指2",
-    "head": "头盔",
-    "chest": "胸甲",
-    "shoulders": "护肩",
-    "hands": "护手",
-    "legs": "护腿",
-    "feet": "鞋子",
-    "waist": "腰带",
-    "relic": "圣物",
-    "medal": "勋章",
-}
+
+def tr(key: str, **values: object) -> str:
+    return I18N.text(key, **values)
+
+
+TRANSLATED_SLOTS = (
+    "weapon1", "weapon1Alt", "weapon2", "weapon2Alt", "amulet", "ring1",
+    "ring2", "head", "chest", "shoulders", "hands", "legs", "feet",
+    "waist", "relic", "medal",
+)
+APP_TITLE = ""
+APP_TITLE_AND_AUTHOR = ""
+FREE_APP_TITLE = ""
+SLOT_LABELS: dict[str, str] = {}
+
+
+def refresh_translated_constants() -> None:
+    global APP_TITLE, APP_TITLE_AND_AUTHOR, FREE_APP_TITLE
+    APP_TITLE = tr("app.title")
+    APP_TITLE_AND_AUTHOR = tr(
+        "app.title_author", title=APP_TITLE, version=APP_VERSION
+    )
+    FREE_APP_TITLE = tr("app.title_free", title=APP_TITLE, version=APP_VERSION)
+    SLOT_LABELS.clear()
+    SLOT_LABELS.update({slot: tr(f"slot.{slot}") for slot in TRANSLATED_SLOTS})
+
+
+refresh_translated_constants()
 
 # 高级面板中的槽位排列顺序
 SLOT_ORDER = [
@@ -59,7 +68,7 @@ def ensure_activated(root: tk.Tk) -> bool:
 
     accepted = False
     dialog = tk.Toplevel(root)
-    dialog.title("软件离线授权")
+    dialog.title(tr("license.title"))
     dialog.resizable(False, False)
     dialog.grab_set()
 
@@ -67,10 +76,10 @@ def ensure_activated(root: tk.Tk) -> bool:
     frame.pack(fill=tk.BOTH, expand=True)
     ttk.Label(
         frame,
-        text="此电脑尚未授权。请将下面的机器码发送给软件作者，\n收到许可证文件后点击“导入许可证”。",
+        text=tr("license.instructions"),
         justify=tk.LEFT,
     ).grid(row=0, column=0, columnspan=2, sticky=tk.W, pady=(0, 12))
-    ttk.Label(frame, text=f"当前状态：{status.reason}", foreground="#9A3412").grid(
+    ttk.Label(frame, text=tr("license.status", reason=I18N.message(status.reason)), foreground="#9A3412").grid(
         row=1, column=0, columnspan=2, sticky=tk.W, pady=(0, 10)
     )
     code_var = tk.StringVar(value=status.machine_code)
@@ -81,16 +90,16 @@ def ensure_activated(root: tk.Tk) -> bool:
         root.clipboard_clear()
         root.clipboard_append(status.machine_code)
         root.update()
-        copy_button.configure(text="已复制")
+        copy_button.configure(text=tr("license.copied"))
 
-    copy_button = ttk.Button(frame, text="复制机器码", command=copy_code)
+    copy_button = ttk.Button(frame, text=tr("license.copy"), command=copy_code)
     copy_button.grid(row=2, column=1, padx=(8, 0))
 
     def import_selected() -> None:
         nonlocal accepted
         selected = filedialog.askopenfilename(
-            title="选择作者签发的许可证",
-            filetypes=(("许可证文件", "*.lic"), ("所有文件", "*.*")),
+            title=tr("license.select_title"),
+            filetypes=((tr("license.file_type"), "*.lic"), (tr("common.all_files"), "*.*")),
             parent=dialog,
         )
         if not selected:
@@ -98,20 +107,20 @@ def ensure_activated(root: tk.Tk) -> bool:
         try:
             installed = install_license(Path(selected))
         except (LicenseError, OSError) as exc:
-            messagebox.showerror("导入失败", str(exc), parent=dialog)
+            messagebox.showerror(tr("license.import_failed"), I18N.message(exc), parent=dialog)
             return
         accepted = True
         messagebox.showinfo(
-            "授权成功",
-            f"许可证已安装。\n\n机器码：{installed.machine_code}",
+            tr("license.success_title"),
+            tr("license.success", machine_code=installed.machine_code),
             parent=dialog,
         )
         dialog.destroy()
 
     buttons = ttk.Frame(frame)
     buttons.grid(row=3, column=0, columnspan=2, sticky=tk.E, pady=(18, 0))
-    ttk.Button(buttons, text="退出", command=dialog.destroy).pack(side=tk.RIGHT)
-    ttk.Button(buttons, text="导入许可证…", command=import_selected).pack(
+    ttk.Button(buttons, text=tr("common.exit"), command=dialog.destroy).pack(side=tk.RIGHT)
+    ttk.Button(buttons, text=tr("license.import"), command=import_selected).pack(
         side=tk.RIGHT, padx=(0, 8)
     )
     dialog.protocol("WM_DELETE_WINDOW", dialog.destroy)
@@ -139,8 +148,22 @@ def writable_directory() -> Path:
 
 
 class SaveGeneratorApp:
-    def __init__(self, root: tk.Tk, window_title: str = APP_TITLE_AND_AUTHOR):
+    COLLAPSED_WIDTH = 660
+    EXPANDED_WIDTH = 1000
+    CONTENT_HEIGHT = 560
+    WINDOW_HEIGHT = 563
+
+    def __init__(
+        self,
+        root: tk.Tk,
+        window_title: str | None = None,
+        *,
+        free_edition: bool = False,
+    ):
         self.root = root
+        self.free_edition = free_edition
+        self.disposed = False
+        self._after_id: str | None = None
         self.events: queue.Queue[tuple[str, object]] = queue.Queue()
         self.last_output: Path | None = None
         self.running = False
@@ -154,21 +177,45 @@ class SaveGeneratorApp:
         self.slot_crafting_vars: dict[str, tk.StringVar] = {
             slot: tk.StringVar(value="") for slot in SLOT_ORDER
         }
-        self.template_placeholder = "可选择存档模板，未选择时使用自带模板"
+        self.template_placeholder = tr("placeholder.template")
         self.template_placeholder_active = False
         self.advanced_panel_visible = False
 
-        root.title(window_title)
-        root.minsize(660, 560)
+        root.title(
+            window_title
+            or (FREE_APP_TITLE if self.free_edition else APP_TITLE_AND_AUTHOR)
+        )
+        root.minsize(self.COLLAPSED_WIDTH, self.WINDOW_HEIGHT)
         root.protocol("WM_DELETE_WINDOW", self._close)
 
-        # 窗口居中显示（先隐藏，设置好位置后再显示）
+        self.menu_bar = tk.Menu(root, tearoff=False)
+        self.language_menu = tk.Menu(self.menu_bar, tearoff=False)
+        self.language_code_var = tk.StringVar(value=I18N.language)
+        self.language_codes: list[str] = []
+        for code, name in I18N.language_choices():
+            self.language_codes.append(code)
+            self.language_menu.add_radiobutton(
+                label=name,
+                variable=self.language_code_var,
+                value=code,
+                command=lambda selected=code: self._switch_language(selected),
+            )
+        self.menu_bar.add_cascade(
+            label=tr("app.language"), menu=self.language_menu
+        )
+        root.configure(menu=self.menu_bar)
+
+        # Visually separate the native menu bar from the application content.
+        self.menu_separator = ttk.Separator(root, orient=tk.HORIZONTAL)
+        self.menu_separator.pack(fill=tk.X, pady=(0, 1))
+
+        # 首次启动时居中；语言切换仅原地更新文本，不会再次执行这里。
         root.withdraw()
         root.update_idletasks()
+        window_width = self.COLLAPSED_WIDTH
+        window_height = self.WINDOW_HEIGHT
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
-        window_width = 660
-        window_height = 560
         x = (screen_width - window_width) // 2
         y = (screen_height - window_height) // 2
         root.geometry(f"{window_width}x{window_height}+{x}+{y}")
@@ -179,26 +226,30 @@ class SaveGeneratorApp:
         self.main_container.pack(fill=tk.BOTH, expand=True)
 
         # 左侧主面板（固定宽度，不跟随窗口拉伸）
-        frame = ttk.Frame(self.main_container, padding=20, width=620)
-        frame.pack(side=tk.LEFT, fill=tk.Y)
-        frame.pack_propagate(False)  # 保持固定宽度
+        frame = ttk.Frame(
+            self.main_container,
+            padding=20,
+            width=self.COLLAPSED_WIDTH,
+            height=self.CONTENT_HEIGHT,
+        )
+        frame.place(x=0, y=0, width=self.COLLAPSED_WIDTH, relheight=1)
+        frame.grid_propagate(False)  # 主页面固定宽度，不受翻译文本长度影响
         frame.columnconfigure(1, weight=1)
+        frame.columnconfigure(2, minsize=118)
         frame.rowconfigure(7, weight=1)  # 日志框行可拉伸
 
-        ttk.Label(frame, text=APP_TITLE, font=("Microsoft YaHei UI", 16, "bold")).grid(
-            row=0, column=0, columnspan=3, sticky=tk.W, pady=(0, 6)
-        )
-
-        ttk.Label(frame, text="模拟器链接：").grid(row=1, column=0, sticky=tk.W, pady=6)
+        self.link_label = ttk.Label(frame, text=tr("field.link"))
+        self.link_label.grid(row=1, column=0, sticky=tk.W, pady=6)
         self.link_var = tk.StringVar(value="https://www.grimtools.com/calc/")
         self.link_entry = ttk.Entry(frame, textvariable=self.link_var)
         self.link_entry.grid(row=1, column=1, sticky=tk.EW, pady=6)
         self.advanced_button = ttk.Button(
-            frame, text="高级", command=self._toggle_advanced_panel
+            frame, text=tr("field.advanced"), command=self._toggle_advanced_panel
         )
-        self.advanced_button.grid(row=1, column=2, sticky=tk.W, padx=(6, 0), pady=6)
+        self.advanced_button.grid(row=1, column=2, sticky=tk.EW, padx=(6, 0), pady=6)
 
-        ttk.Label(frame, text="角色名称：").grid(row=2, column=0, sticky=tk.W, pady=6)
+        self.name_label = ttk.Label(frame, text=tr("field.character_name"))
+        self.name_label.grid(row=2, column=0, sticky=tk.W, pady=6)
         self.name_var = tk.StringVar()
         self.name_entry = ttk.Entry(frame, textvariable=self.name_var, width=32)
         self.name_entry.grid(row=2, column=1, sticky=tk.EW, pady=6)
@@ -207,59 +258,62 @@ class SaveGeneratorApp:
         # 记住名称按钮
         self.remember_name_var = tk.BooleanVar()
         self.remember_name_button = ttk.Button(
-            frame, text="记住名称", command=self._on_remember_name_toggle
+            frame, text=tr("field.remember_name"), command=self._on_remember_name_toggle
         )
-        self.remember_name_button.grid(row=2, column=2, sticky=tk.W, padx=(6, 0), pady=6)
+        self.remember_name_button.grid(row=2, column=2, sticky=tk.EW, padx=(6, 0), pady=6)
 
         # 性别和材料选项行
         options_frame = ttk.Frame(frame)
         options_frame.grid(row=3, column=0, columnspan=3, sticky=tk.W, pady=6)
         
-        ttk.Label(options_frame, text="角色性别：").pack(side=tk.LEFT, padx=(0, 10))
+        self.gender_label = ttk.Label(options_frame, text=tr("field.gender"))
+        self.gender_label.pack(side=tk.LEFT, padx=(0, 10))
         self.gender_var = tk.StringVar(value="male")
         self.male_radio = ttk.Radiobutton(
-            options_frame, text="男", variable=self.gender_var, value="male"
+            options_frame, text=tr("field.male"), variable=self.gender_var, value="male"
         )
         self.male_radio.pack(side=tk.LEFT, padx=(0, 10))
         self.female_radio = ttk.Radiobutton(
-            options_frame, text="女", variable=self.gender_var, value="female"
+            options_frame, text=tr("field.female"), variable=self.gender_var, value="female"
         )
         self.female_radio.pack(side=tk.LEFT, padx=(0, 20))
         
         self.keep_materials_var = tk.BooleanVar(value=True)
         self.keep_materials_check = ttk.Checkbutton(
-            options_frame, text="常用材料", variable=self.keep_materials_var
+            options_frame, text=tr("field.materials"), variable=self.keep_materials_var
         )
         self.keep_materials_check.pack(side=tk.LEFT, padx=(0, 15))
         
         self.keep_iron_var = tk.BooleanVar(value=True)
         self.keep_iron_check = ttk.Checkbutton(
-            options_frame, text="铁币", variable=self.keep_iron_var
+            options_frame, text=tr("field.iron"), variable=self.keep_iron_var
         )
         self.keep_iron_check.pack(side=tk.LEFT)
 
-        ttk.Label(frame, text="模板目录：").grid(row=4, column=0, sticky=tk.W, pady=6)
+        self.template_label = ttk.Label(frame, text=tr("field.template"))
+        self.template_label.grid(row=4, column=0, sticky=tk.W, pady=6)
         self.template_entry = ttk.Entry(frame, textvariable=self.template_var)
         self.template_entry.grid(row=4, column=1, sticky=tk.EW, pady=6)
         self.template_browse_button = ttk.Button(
-            frame, text="浏览", command=self._browse_template
+            frame, text=tr("common.browse"), command=self._browse_template
         )
-        self.template_browse_button.grid(row=4, column=2, sticky=tk.W, padx=(6, 0), pady=6)
+        self.template_browse_button.grid(row=4, column=2, sticky=tk.EW, padx=(6, 0), pady=6)
         
         # 设置占位符提示
         self._setup_template_placeholder()
 
-        ttk.Label(frame, text="输出目录：").grid(row=5, column=0, sticky=tk.W, pady=6)
+        self.output_label = ttk.Label(frame, text=tr("field.output"))
+        self.output_label.grid(row=5, column=0, sticky=tk.W, pady=6)
         self.output_var = tk.StringVar()
         self.output_entry = ttk.Entry(frame, textvariable=self.output_var)
         self.output_entry.grid(row=5, column=1, sticky=tk.EW, pady=6)
         self.output_browse_button = ttk.Button(
-            frame, text="浏览", command=self._browse_output
+            frame, text=tr("common.browse"), command=self._browse_output
         )
-        self.output_browse_button.grid(row=5, column=2, sticky=tk.W, padx=(6, 0), pady=6)
+        self.output_browse_button.grid(row=5, column=2, sticky=tk.EW, padx=(6, 0), pady=6)
         
         # 设置输出目录占位符
-        self.output_placeholder = "默认输出到工具目录下的 output 文件夹"
+        self.output_placeholder = tr("placeholder.output")
         self.output_placeholder_active = False
         self._setup_output_placeholder()
 
@@ -269,12 +323,12 @@ class SaveGeneratorApp:
         button_frame = ttk.Frame(frame)
         button_frame.grid(row=6, column=0, columnspan=3, sticky=tk.EW, pady=6)
         self.generate_button = ttk.Button(
-            button_frame, text="生成角色存档", command=self.start_generation
+            button_frame, text=tr("action.generate"), command=self.start_generation
         )
         self.generate_button.pack(side=tk.LEFT)
         self.open_button = ttk.Button(
             button_frame,
-            text="打开输出目录",
+            text=tr("action.open_output"),
             command=self.open_output,
             state=tk.DISABLED,
         )
@@ -282,31 +336,36 @@ class SaveGeneratorApp:
         self.progress = ttk.Progressbar(button_frame, mode="determinate", length=180, maximum=100)
         self.progress.pack(side=tk.RIGHT, fill=tk.X, expand=True, padx=(20, 0))
 
-        log_frame = ttk.LabelFrame(frame, text="生成日志", padding=8)
-        log_frame.grid(row=7, column=0, columnspan=3, sticky=tk.NSEW, pady=6)
-        log_frame.columnconfigure(0, weight=1)
-        log_frame.rowconfigure(0, weight=1)
+        self.log_frame = ttk.LabelFrame(frame, text=tr("log.title"), padding=8)
+        self.log_frame.grid(row=7, column=0, columnspan=3, sticky=tk.NSEW, pady=6)
+        self.log_frame.columnconfigure(0, weight=1)
+        self.log_frame.rowconfigure(0, weight=1)
         self.log = tk.Text(
-            log_frame,
+            self.log_frame,
             height=10,
             wrap=tk.WORD,
             state=tk.DISABLED,
             font=("Microsoft YaHei UI", 9),
         )
-        scrollbar = ttk.Scrollbar(log_frame, orient=tk.VERTICAL, command=self.log.yview)
+        scrollbar = ttk.Scrollbar(self.log_frame, orient=tk.VERTICAL, command=self.log.yview)
         self.log.configure(yscrollcommand=scrollbar.set)
         self.log.grid(row=0, column=0, sticky=tk.NSEW)
         scrollbar.grid(row=0, column=1, sticky=tk.NS)
 
-        ttk.Label(
+        self.distribution_notice = ttk.Label(
             frame,
-            text="本软件仅供内部测试人员使用，禁止传播！如果您通过付费或其它方式获取本软件，请立即删除并举报相关渠道。",
+            text=tr("notice.distribution"),
             foreground="#555555",
-        ).grid(row=8, column=0, columnspan=3, sticky=tk.W, pady=(10, 0))
+            justify=tk.LEFT,
+            wraplength=600,
+        )
+        self.distribution_notice.grid(
+            row=8, column=0, columnspan=3, sticky=tk.W, pady=(10, 0)
+        )
 
         # 右侧高级面板（初始隐藏）
         self.advanced_panel = ttk.LabelFrame(
-            self.main_container, text="高级设置", padding=10
+            self.main_container, text=tr("advanced.title"), padding=10
         )
         self.slot_seed_entries: dict[str, ttk.Entry] = {}
         self.slot_crafting_combos: dict[str, ttk.Combobox] = {}
@@ -330,13 +389,16 @@ class SaveGeneratorApp:
         canvas.bind_all("<MouseWheel>", _on_mousewheel)
 
         # 标题行
-        ttk.Label(scroll_frame, text="槽位", font=("Microsoft YaHei UI", 9, "bold")).grid(
+        self.advanced_slot_header = ttk.Label(scroll_frame, text=tr("advanced.slot"), font=("Microsoft YaHei UI", 9, "bold"))
+        self.advanced_slot_header.grid(
             row=0, column=0, sticky=tk.W, pady=(0, 4), padx=(0, 4)
         )
-        ttk.Label(scroll_frame, text="种子(HEX)", font=("Microsoft YaHei UI", 9, "bold")).grid(
+        self.advanced_seed_header = ttk.Label(scroll_frame, text=tr("advanced.seed"), font=("Microsoft YaHei UI", 9, "bold"))
+        self.advanced_seed_header.grid(
             row=0, column=1, sticky=tk.W, pady=(0, 4), padx=(0, 4)
         )
-        ttk.Label(scroll_frame, text="锻造奖励", font=("Microsoft YaHei UI", 9, "bold")).grid(
+        self.advanced_crafting_header = ttk.Label(scroll_frame, text=tr("advanced.crafting"), font=("Microsoft YaHei UI", 9, "bold"))
+        self.advanced_crafting_header.grid(
             row=0, column=2, sticky=tk.W, pady=(0, 4)
         )
 
@@ -344,12 +406,15 @@ class SaveGeneratorApp:
 
         # 输入验证：只允许十六进制字符（0-9, a-f, A-F）
         hex_validate_cmd = (scroll_frame.register(self._validate_hex_input), "%P")
+        self.slot_labels: dict[str, ttk.Label] = {}
         for i, slot in enumerate(SLOT_ORDER):
             row = i + 1
             label_text = SLOT_LABELS.get(slot, slot)
-            ttk.Label(scroll_frame, text=f"{label_text}：").grid(
+            slot_label = ttk.Label(scroll_frame, text=label_text)
+            slot_label.grid(
                 row=row, column=0, sticky=tk.W, pady=2, padx=(0, 4)
             )
+            self.slot_labels[slot] = slot_label
             # 种子输入框（十六进制输入）
             entry = ttk.Entry(
                 scroll_frame, textvariable=self.slot_seed_vars[slot], width=10,
@@ -375,12 +440,12 @@ class SaveGeneratorApp:
 
 
 
-        root.after(100, self._process_events)
-        self.link_entry.selection_range(0, tk.END)
-        self.link_entry.focus_set()
-        
         # 初始显示占位符
         self._show_template_placeholder()
+
+        self._after_id = root.after(100, self._process_events)
+        self.link_entry.selection_range(0, tk.END)
+        self.link_entry.focus_set()
 
     @staticmethod
     def _validate_hex_input(value: str) -> bool:
@@ -396,9 +461,97 @@ class SaveGeneratorApp:
         """构建锻造奖励选项列表：(显示名称, 路径)"""
         options = [("", "")]  # 空选项
         for path, info in sorted(self.crafting_bonus_data.items()):
-            display_name = info.get("display_name", path.split("/")[-1])
+            default_name = info.get("display_name", path.split("/")[-1])
+            display_name = I18N.crafting_name(path, default_name)
             options.append((display_name, path))
         return options
+
+    def _switch_language(self, code: str) -> None:
+        if not code or code == I18N.language:
+            return
+        try:
+            config = {}
+            if CONFIG_FILE.exists():
+                config = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
+            config["language"] = code
+            CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+            CONFIG_FILE.write_text(
+                json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+        except (OSError, UnicodeError, json.JSONDecodeError):
+            return
+        if not I18N.set_language(code):
+            return
+        refresh_translated_constants()
+        self.language_code_var.set(code)
+        self._apply_translations()
+
+    def _apply_translations(self) -> None:
+        """Update widget text in place without recreating or flashing the window."""
+        self.root.title(FREE_APP_TITLE if self.free_edition else APP_TITLE_AND_AUTHOR)
+        self.menu_bar.entryconfigure(0, label=tr("app.language"))
+        language_names = dict(I18N.language_choices())
+        for index, code in enumerate(self.language_codes):
+            self.language_menu.entryconfigure(index, label=language_names.get(code, code))
+
+        widget_texts = (
+            (self.link_label, "field.link"),
+            (self.advanced_button, "field.advanced"),
+            (self.name_label, "field.character_name"),
+            (self.gender_label, "field.gender"),
+            (self.male_radio, "field.male"),
+            (self.female_radio, "field.female"),
+            (self.keep_materials_check, "field.materials"),
+            (self.keep_iron_check, "field.iron"),
+            (self.template_label, "field.template"),
+            (self.template_browse_button, "common.browse"),
+            (self.output_label, "field.output"),
+            (self.output_browse_button, "common.browse"),
+            (self.generate_button, "action.generate"),
+            (self.open_button, "action.open_output"),
+            (self.log_frame, "log.title"),
+            (self.distribution_notice, "notice.distribution"),
+            (self.advanced_panel, "advanced.title"),
+            (self.advanced_slot_header, "advanced.slot"),
+            (self.advanced_seed_header, "advanced.seed"),
+            (self.advanced_crafting_header, "advanced.crafting"),
+        )
+        for widget, key in widget_texts:
+            widget.configure(text=tr(key))
+        self._update_remember_button_text()
+
+        if self.template_placeholder_active:
+            self.template_placeholder = tr("placeholder.template")
+            self.template_entry.delete(0, tk.END)
+            self.template_entry.insert(0, self.template_placeholder)
+        else:
+            self.template_placeholder = tr("placeholder.template")
+        if self.output_placeholder_active:
+            self.output_placeholder = tr("placeholder.output")
+            self.output_entry.delete(0, tk.END)
+            self.output_entry.insert(0, self.output_placeholder)
+        else:
+            self.output_placeholder = tr("placeholder.output")
+
+        old_name_to_path = {
+            name: path for name, path in self.crafting_bonus_options if name
+        }
+        selected_paths = {
+            slot: old_name_to_path.get(variable.get(), "")
+            for slot, variable in self.slot_crafting_vars.items()
+        }
+        self.crafting_bonus_options = self._build_crafting_options()
+        crafting_names = [name for name, _path in self.crafting_bonus_options]
+        path_to_name = {
+            path: name for name, path in self.crafting_bonus_options if path
+        }
+        for slot, combo in self.slot_crafting_combos.items():
+            combo.configure(values=crafting_names)
+            self.slot_crafting_vars[slot].set(
+                path_to_name.get(selected_paths.get(slot, ""), "")
+            )
+        for slot, label in self.slot_labels.items():
+            label.configure(text=SLOT_LABELS.get(slot, slot))
 
     def _setup_template_placeholder(self) -> None:
         """设置模板输入框的占位符提示"""
@@ -465,6 +618,7 @@ class SaveGeneratorApp:
             output_input = self.output_var.get().strip()
             if output_input and not self.output_placeholder_active:
                 config["output_directory"] = output_input
+            CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
             with open(CONFIG_FILE, "w", encoding="utf-8") as f:
                 json.dump(config, f, ensure_ascii=False, indent=2)
         except OSError:
@@ -479,9 +633,9 @@ class SaveGeneratorApp:
     def _update_remember_button_text(self) -> None:
         """更新记住按钮的文本"""
         if self.remember_name_var.get():
-            self.remember_name_button.configure(text="✅记住名称")
+            self.remember_name_button.configure(text=tr("field.remember_name_on"))
         else:
-            self.remember_name_button.configure(text="❌记住名称")
+            self.remember_name_button.configure(text=tr("field.remember_name_off"))
 
     def _show_template_placeholder(self) -> None:
         """显示占位符提示"""
@@ -516,14 +670,17 @@ class SaveGeneratorApp:
     def _toggle_advanced_panel(self) -> None:
         """切换高级面板的显示/隐藏"""
         if self.advanced_panel_visible:
-            self.advanced_panel.pack_forget()
+            self.advanced_panel.place_forget()
             self.advanced_panel_visible = False
-            self.root.update_idletasks()
-            self.root.geometry("660x560")
+            self.root.geometry(f"{self.COLLAPSED_WIDTH}x{self.WINDOW_HEIGHT}")
         else:
-            self.root.geometry("960x560")
-            self.root.update_idletasks()
-            self.advanced_panel.pack(side=tk.RIGHT, fill=tk.BOTH, padx=(0, 10), pady=20)
+            self.root.geometry(f"{self.EXPANDED_WIDTH}x{self.WINDOW_HEIGHT}")
+            self.advanced_panel.place(
+                x=self.COLLAPSED_WIDTH,
+                y=20,
+                width=self.EXPANDED_WIDTH - self.COLLAPSED_WIDTH - 10,
+                height=self.CONTENT_HEIGHT - 40,
+            )
             self.advanced_panel_visible = True
 
     def _browse_template(self) -> None:
@@ -540,7 +697,7 @@ class SaveGeneratorApp:
             initial_dir = str(Path(current_template).parent)
         
         directory = filedialog.askdirectory(
-            title="选择模板目录",
+            title=tr("dialog.select_template"),
             initialdir=initial_dir,
             parent=self.root,
         )
@@ -551,7 +708,7 @@ class SaveGeneratorApp:
             if not (template_path / "player.gdc").is_file():
                 messagebox.showwarning(
                     APP_TITLE,
-                    f"选择的目录不是有效的模板目录：\n{template_path}\n\n模板目录必须包含 player.gdc 文件。",
+                    tr("error.selected_template_invalid", path=template_path),
                     parent=self.root,
                 )
                 return
@@ -573,7 +730,7 @@ class SaveGeneratorApp:
             initial_dir = str(Path(current_output).parent)
         
         directory = filedialog.askdirectory(
-            title="选择输出目录",
+            title=tr("dialog.select_output"),
             initialdir=initial_dir,
             parent=self.root,
         )
@@ -639,6 +796,7 @@ class SaveGeneratorApp:
         self.template_entry.configure(state=tk.DISABLED if running else tk.NORMAL)
         self.template_browse_button.configure(state=tk.DISABLED if running else tk.NORMAL)
         self.advanced_button.configure(state=tk.DISABLED if running else tk.NORMAL)
+        self.menu_bar.entryconfigure(0, state=tk.DISABLED if running else tk.NORMAL)
         entry_state = tk.DISABLED if running else tk.NORMAL
         combo_state = "disabled" if running else "readonly"
         for entry in self.slot_seed_entries.values():
@@ -660,11 +818,11 @@ class SaveGeneratorApp:
         try:
             name = validate_character_name(self.name_var.get())
         except GenerationError as exc:
-            messagebox.showwarning(APP_TITLE, str(exc), parent=self.root)
+            messagebox.showwarning(APP_TITLE, I18N.message(exc), parent=self.root)
             self.name_entry.focus_set()
             return
         if not link or link == "https://www.grimtools.com/calc/":
-            messagebox.showwarning(APP_TITLE, "请输入完整的 GrimTools 构筑链接。", parent=self.root)
+            messagebox.showwarning(APP_TITLE, tr("error.link_required"), parent=self.root)
             self.link_entry.focus_set()
             return
         
@@ -680,7 +838,7 @@ class SaveGeneratorApp:
             if not template_path.is_dir():
                 messagebox.showwarning(
                     APP_TITLE,
-                    f"模板目录不存在：\n{template_path}",
+                    tr("error.template_missing", path=template_path),
                     parent=self.root,
                 )
                 self.template_entry.focus_set()
@@ -688,7 +846,7 @@ class SaveGeneratorApp:
             if not (template_path / "player.gdc").is_file():
                 messagebox.showwarning(
                     APP_TITLE,
-                    f"模板目录不是有效的模板目录：\n{template_path}\n\n模板目录必须包含 player.gdc 文件。",
+                    tr("error.template_invalid", path=template_path),
                     parent=self.root,
                 )
                 self.template_entry.focus_set()
@@ -706,7 +864,7 @@ class SaveGeneratorApp:
             if not output_root.is_dir():
                 messagebox.showwarning(
                     APP_TITLE,
-                    f"输出目录不存在：\n{output_root}",
+                    tr("error.output_missing", path=output_root),
                     parent=self.root,
                 )
                 self.output_entry.focus_set()
@@ -717,7 +875,7 @@ class SaveGeneratorApp:
         if output_directory.exists():
             overwrite = messagebox.askyesno(
                 APP_TITLE,
-                f"角色目录已经存在：\n{output_directory}\n\n是否覆盖？",
+                tr("confirm.overwrite", path=output_directory),
                 parent=self.root,
             )
             if not overwrite:
@@ -738,7 +896,7 @@ class SaveGeneratorApp:
                 label = SLOT_LABELS.get(slot, slot)
                 messagebox.showwarning(
                     APP_TITLE,
-                    f"「{label}」的随机种子格式无效。\n请输入0到FFFFFFFF之间的十六进制数。",
+                    tr("error.seed_invalid", slot=label),
                     parent=self.root,
                 )
                 self.slot_seed_entries[slot].focus_set()
@@ -775,24 +933,25 @@ class SaveGeneratorApp:
     ) -> None:
         try:
             self.events.put(("progress", 10))
-            self.events.put(("log", "[1/4] 正在读取 GrimTools 构筑……"))
+            self.events.put(("log", tr("log.fetch")))
             build = fetch_build(link)
             self.events.put(
-                ("log", f"      构筑 ID: {build.build_id}；游戏版本: {build.game_version}")
+                ("log", tr("log.build", build_id=build.build_id, game_version=build.game_version))
             )
             if is_default_template:
-                self.events.put(("log", "      使用默认模板"))
+                self.events.put(("log", tr("log.default_template")))
             else:
-                self.events.put(("log", f"      使用自定义模板: {template_directory}"))
+                self.events.put(("log", tr("log.custom_template", path=template_directory)))
             if slot_seeds:
                 labels = [SLOT_LABELS.get(s, s) for s in slot_seeds]
-                self.events.put(("log", f"      使用自定义种子部位: {', '.join(labels)}"))
+                self.events.put(("log", tr("log.custom_seeds", slots=", ".join(labels))))
             if slot_crafting:
-                labels = [f"{SLOT_LABELS.get(s, s)}->{self.crafting_bonus_data.get(p, {}).get('display_name', p.split('/')[-1])}" for s, p in slot_crafting.items()]
-                self.events.put(("log", f"      使用锻造奖励: {', '.join(labels)}"))
+                display_by_path = {path: name for name, path in self.crafting_bonus_options}
+                labels = [f"{SLOT_LABELS.get(s, s)}->{display_by_path.get(p, p.split('/')[-1])}" for s, p in slot_crafting.items()]
+                self.events.put(("log", tr("log.crafting", bonuses=", ".join(labels))))
             
             self.events.put(("progress", 30))
-            self.events.put(("log", "[2/4] 正在复制模板并写入角色数据……"))
+            self.events.put(("log", tr("log.generate")))
             result = generate_save(
                 build,
                 name,
@@ -807,31 +966,37 @@ class SaveGeneratorApp:
             )
             
             self.events.put(("progress", 70))
-            self.events.put(("log", "[3/4] 已完成解密后回读校验。"))
+            self.events.put(("log", tr("log.verified")))
             
             self.events.put(("progress", 90))
-            self.events.put(("log", "[4/4] 角色存档生成成功："))
-            self.events.put(("log", f"      角色名称: {result.character_name}"))
-            self.events.put(("log", f"      职业标记: {result.class_tag}"))
-            self.events.put(("log", f"      等级: {result.level}"))
+            self.events.put(("log", tr("log.success")))
+            self.events.put(("log", tr("log.character", name=result.character_name)))
+            self.events.put(("log", tr("log.class", class_tag=result.class_tag)))
+            self.events.put(("log", tr("log.level", level=result.level)))
             self.events.put(
                 (
                     "log",
-                    f"      装备: {result.equipment_count}；技能: {result.skill_count}；"
-                    f"星座节点: {result.devotion_count}",
+                    tr(
+                        "log.counts",
+                        equipment=result.equipment_count,
+                        skills=result.skill_count,
+                        devotions=result.devotion_count,
+                    ),
                 )
             )
             for warning in result.warnings:
-                self.events.put(("log", f"[注意] {warning}"))
+                self.events.put(("log", tr("log.warning", message=I18N.message(warning))))
             self.events.put(("progress", 100))
             self.events.put(("success", result.output_directory))
-            self.events.put(("log", f"输出目录: {result.output_directory}"))
+            self.events.put(("log", tr("log.output", path=result.output_directory)))
         except (GenerationError, GrimToolsError, SaveFormatError, OSError) as exc:
-            self.events.put(("error", str(exc)))
+            self.events.put(("error", I18N.message(exc)))
         except Exception as exc:  # Keep the packaged GUI from exiting silently.
-            self.events.put(("error", f"未预期错误：{exc}"))
+            self.events.put(("error", tr("error.unexpected", message=exc)))
 
     def _process_events(self) -> None:
+        if self.disposed:
+            return
         try:
             while True:
                 kind, value = self.events.get_nowait()
@@ -845,16 +1010,17 @@ class SaveGeneratorApp:
                     self._save_config()  # 保存配置（包括记住的名称）
                     messagebox.showinfo(
                         APP_TITLE,
-                        f"角色存档生成成功！\n\n{self.last_output}",
+                        tr("dialog.success", path=self.last_output),
                         parent=self.root,
                     )
                 elif kind == "error":
-                    self._append_log(f"[失败] {value}")
+                    self._append_log(tr("log.failed", message=value))
                     self._set_running(False)
                     messagebox.showerror(APP_TITLE, str(value), parent=self.root)
         except queue.Empty:
             pass
-        self.root.after(100, self._process_events)
+        if not self.disposed:
+            self._after_id = self.root.after(100, self._process_events)
 
     def open_output(self) -> None:
         if self.last_output and self.last_output.is_dir():
@@ -865,7 +1031,7 @@ class SaveGeneratorApp:
 
     def _close(self) -> None:
         if self.running and not messagebox.askyesno(
-            APP_TITLE, "角色存档仍在生成，确定要退出吗？", parent=self.root
+            APP_TITLE, tr("confirm.exit_running"), parent=self.root
         ):
             return
         self._save_config()  # 退出时保存配置
@@ -888,7 +1054,12 @@ def main(*, require_license: bool = True, window_title: str = APP_TITLE_AND_AUTH
     if require_license and not ensure_activated(root):
         root.destroy()
         return 1
-    SaveGeneratorApp(root, window_title=window_title)
+    app = SaveGeneratorApp(
+        root,
+        window_title=window_title,
+        free_edition=not require_license,
+    )
+    setattr(root, "_save_generator_app", app)
     root.mainloop()
     return 0
 

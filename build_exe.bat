@@ -14,21 +14,23 @@ if "%MODE%"=="" set "MODE=licensed"
 if /i "%MODE%"=="licensed" (
   set "ENTRY=GenerateSaveGUI.py"
   set "APP_NAME=GenerateSave-%APP_VERSION%"
-  set "DIST_DIR=dist"
 ) else if /i "%MODE%"=="free" (
   set "ENTRY=GenerateSaveGUIFree.py"
   set "APP_NAME=GenerateSave-Free-%APP_VERSION%"
-  set "DIST_DIR=dist"
 ) else (
   echo Usage: build_exe.bat [licensed^|free]
   exit /b 2
 )
 
+set "RELEASE_DIR=dist\GenerateSave-%APP_VERSION%\%MODE%"
+if not exist "%RELEASE_DIR%" mkdir "%RELEASE_DIR%"
+
 python -m PyInstaller --noconfirm --clean --onefile --windowed ^
   --name "%APP_NAME%" ^
   --add-data "_template;_template" ^
   --add-data "database;database" ^
-  --distpath "%DIST_DIR%" ^
+  --add-data "languages;languages" ^
+  --distpath "%RELEASE_DIR%" ^
   --workpath "build\%MODE%" ^
   --specpath "." ^
   "%ENTRY%"
@@ -39,6 +41,12 @@ if errorlevel 1 (
   exit /b 1
 )
 
+xcopy /E /I /Y "languages" "%RELEASE_DIR%\languages" >nul
+if errorlevel 1 (
+  echo Failed to copy language packs.
+  exit /b 1
+)
+
 echo.
-echo %MODE% EXE created: %~dp0%DIST_DIR%\%APP_NAME%.exe
+echo %MODE% release created: %~dp0%RELEASE_DIR%
 endlocal
