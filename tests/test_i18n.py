@@ -54,7 +54,8 @@ class LanguagePackTests(unittest.TestCase):
 
     def test_configured_language_and_formatting(self):
         with tempfile.TemporaryDirectory() as temporary:
-            config = Path(temporary) / "gui_config.json"
+            config = Path(temporary) / "config" / "config.json"
+            config.parent.mkdir()
             config.write_text(json.dumps({"language": "en_US"}), encoding="utf-8")
             manager = LanguageManager(config)
             self.assertEqual(manager.language, "en_US")

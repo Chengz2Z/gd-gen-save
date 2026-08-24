@@ -16,11 +16,12 @@ from app_version import APP_VERSION, branded_free_window_title, branded_window_t
 from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_character_name, _load_crafting_bonus
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
-from license_manager import LicenseError, default_license_path, install_license, validate_license
+from license_manager import LicenseError, install_license, validate_license
 from i18n import LanguageManager
+from runtime_paths import gui_config_path, program_directory
 
 
-CONFIG_FILE = default_license_path().parent / "gui_config.json"
+CONFIG_FILE = gui_config_path()
 I18N = LanguageManager(CONFIG_FILE)
 
 
@@ -140,9 +141,7 @@ def resource_directory() -> Path:
 
 def writable_directory() -> Path:
     """Directory next to the executable, used for generated characters."""
-    if getattr(sys, "frozen", False):
-        return Path(sys.executable).resolve().parent
-    return Path(__file__).resolve().parents[1] / "artifacts" / "runtime"
+    return program_directory()
 
 
 class SaveGeneratorApp:

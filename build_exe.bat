@@ -25,6 +25,7 @@ if /i "%MODE%"=="licensed" (
 set "RELEASE_DIR=artifacts\releases\GenerateSave-%APP_VERSION%\%MODE%"
 set "SPEC_DIR=artifacts\spec"
 if not exist "%RELEASE_DIR%" mkdir "%RELEASE_DIR%"
+if not exist "%RELEASE_DIR%\config" mkdir "%RELEASE_DIR%\config"
 if not exist "%SPEC_DIR%" mkdir "%SPEC_DIR%"
 
 python -m PyInstaller --noconfirm --clean --onefile --windowed ^
