@@ -8,10 +8,10 @@
 2. 作者在工程目录执行以下命令：
 
    ```powershell
-   python .\license_issuer.py "用户机器码"
+   python .\tools\license_issuer.py "用户机器码"
    ```
 
-3. 签发结果默认位于 `licenses\GDAG-机器码.lic`。将该 `.lic` 文件发给用户。
+3. 签发结果默认位于 `artifacts\licenses\GDAG-机器码.lic`。将该 `.lic` 文件发给用户。
 4. 用户在授权窗口点击“导入许可证”，以后启动无需再次导入。
 
 用户端许可证安装在 `%LOCALAPPDATA%\GrimDawnArchiveGenerator\license.lic`。许可证绑定 Windows MachineGuid、系统卷序列号和产品标识，复制到其他电脑后无效。Windows 重装或系统盘变化后需要提供新机器码重新签发。
@@ -24,12 +24,10 @@
 
 ## 使用方法
 
-### Windows 图形界面
-
-构建后直接运行（版本号以 `app_version.py` 为准）：
+构建后直接运行（版本号以 `src\app_version.py` 为准）：
 
 ```text
-dist/v0.7.0/licensed/GenerateSave-v0.7.0.exe
+artifacts/releases/GenerateSave-v0.7.0/licensed/GenerateSave-v0.7.0.exe
 ```
 
 填写 GrimTools 模拟器链接和角色名称，模板目录输入框显示提示"可选择存档模板，未选时使用自带模板"（可选择自定义模板目录，不选择则使用工具自带的 `_template` 模板），点击"生成角色存档"即可。模板已经打包进 EXE，结果保存在 EXE 同目录的 `output/_角色名称` 中。生成成功后，点击"打开输出目录"按钮会打开 `output` 目录（存档根目录），方便查看所有生成的存档。点击"浏览..."按钮选择模板目录时，默认打开用户的文档目录。
@@ -37,48 +35,27 @@ dist/v0.7.0/licensed/GenerateSave-v0.7.0.exe
 如需重新构建 EXE，请先安装依赖，然后选择授权版或免授权版：
 
 ```powershell
-python -m pip install -r requirements.txt
+python -m pip install -r packaging/requirements.txt
 .\build_exe.bat licensed
 .\build_exe.bat free
 ```
 
-- `licensed`（或不传参数）：生成 `dist\版本号\licensed\GenerateSave-版本号.exe`，启动时必须校验机器许可证。
-- `free`：生成 `dist\版本号\free\GenerateSave-Free-版本号.exe`，完全跳过许可证校验，窗口标题会标记“免授权版”。该版本一旦转发便可被任何人使用，应仅按需提供给可信人员。
+- `licensed`（或不传参数）：生成 `artifacts\releases\GenerateSave-版本号\licensed\GenerateSave-版本号.exe`，启动时必须校验机器许可证。
+- `free`：生成 `artifacts\releases\GenerateSave-版本号\free\GenerateSave-Free-版本号.exe`，完全跳过许可证校验，窗口标题会标记“免授权版”。该版本一旦转发便可被任何人使用，应仅按需提供给可信人员。
 
-每个发布目录都包含 EXE 和 `languages` 目录。软件会优先读取 EXE 同目录下的外置 JSON 语言包，语言包缺项时回退到内置简体中文。可直接修改 JSON 文案或复制现有文件新增语言；`_meta.code` 必须唯一，`strings` 中的占位符（例如 `{path}`、`{version}`）应保留。界面右上角可选择语言并立即生效，切换时会保留当前输入和高级设置。也可在启动前设置 `GENERATESAVE_LANG` 环境变量临时指定语言代码。
+每个发布目录都包含 EXE 和 `languages` 目录。软件会优先读取 EXE 同目录下的外置 JSON 语言包，语言包缺项时回退到内置简体中文。可直接修改 JSON 文案或复制现有文件新增语言；`_meta.code` 必须唯一，`strings` 中的占位符（例如 `{path}`、`{version}`）应保留。界面顶部可选择语言并立即生效，切换时会保留当前输入和高级设置。也可在启动前设置 `GENERATESAVE_LANG` 环境变量临时指定语言代码。
 
-### 命令行
-
-在工具目录运行：
-
-```powershell
-python .\GenerateSave.py `
-  "https://www.grimtools.com/calc/NXl7KPWN" `
-  --name "构筑测试"
-```
-
-也可以使用批处理入口：
-
-```bat
-GenerateSave.bat "https://www.grimtools.com/calc/NXl7KPWN" --name "构筑测试"
-```
-
-默认输出位置：
+## 工程结构
 
 ```text
-tools/Archive-Generator/output/_构筑测试/
-```
-
-将整个 `_构筑测试` 目录复制到游戏的本地角色存档目录即可。复制前请退出游戏并备份原存档；使用本地存档测试时，还应避免 Steam 云存档立刻覆盖本地文件。
-
-## 参数
-
-```text
-link                 GrimTools 构筑链接或构筑 ID
---name, -n           自定义角色名称（必填）
---template           自定义模板目录，默认使用 _template
---output, -o         输出根目录，默认使用 output
---force              覆盖已经存在的同名输出目录
+build_exe.bat       主构建入口
+README.md           项目说明
+src/                GUI 与核心源码
+resources/          模板、数据库及语言包
+tools/              作者侧许可证工具
+tests/              自动化测试
+packaging/          构建依赖配置
+artifacts/          构建产物、运行输出及许可证
 ```
 
 ## 当前行为
@@ -91,7 +68,7 @@ link                 GrimTools 构筑链接或构筑 ID
 - 生成的 `player.gdc`、`.bak`、`.g00`、`.g01`、`.g02` 内容保持同步。
 - 保留模板的地图、任务、声望、仓库及背包内容。
 - 为避免经验值和等级不一致，当前只接受与模板相同的 100 级构筑。
-- 支持自定义模板目录：GUI 中可浏览选择自定义模板目录，命令行可通过 `--template` 参数指定。
+- 支持在 GUI 中浏览选择自定义模板目录。
 - GUI 进度条显示实际生成进度：读取构筑（10%）、写入角色数据（30%）、回读校验（70%）、生成成功（100%）。
 
 ## 已知限制

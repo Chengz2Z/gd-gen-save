@@ -137,14 +137,14 @@ def resource_directory() -> Path:
     bundled = getattr(sys, "_MEIPASS", None)
     if bundled:
         return Path(bundled)
-    return Path(__file__).resolve().parent
+    return Path(__file__).resolve().parents[1] / "resources"
 
 
 def writable_directory() -> Path:
     """Directory next to the executable, used for generated characters."""
     if getattr(sys, "frozen", False):
         return Path(sys.executable).resolve().parent
-    return Path(__file__).resolve().parent
+    return Path(__file__).resolve().parents[1] / "artifacts" / "runtime"
 
 
 class SaveGeneratorApp:

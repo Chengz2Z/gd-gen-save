@@ -5,6 +5,7 @@
 /build/
 /dist/
 /licenses/
+/artifacts/
 *.spec
 
 # Python bytecode and test/tool caches

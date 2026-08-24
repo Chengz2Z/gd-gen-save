@@ -16,6 +16,11 @@ import sys
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+SRC_DIR = PROJECT_DIR / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
 from license_manager import (
     LICENSE_VERSION,
     PRODUCT_ID,
@@ -58,7 +63,7 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
         code = normalize_machine_code(args.machine_code)
-        output = args.output or Path("licenses") / f"GDAG-{code}.lic"
+        output = args.output or PROJECT_DIR / "artifacts" / "licenses" / f"GDAG-{code}.lic"
         path = issue_license(code, output)
     except (OSError, LicenseError) as exc:
         print(f"签发失败：{exc}", file=sys.stderr)

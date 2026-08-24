@@ -7,8 +7,10 @@ import unittest
 
 
 TOOL_DIR = Path(__file__).resolve().parents[1]
-if str(TOOL_DIR) not in sys.path:
-    sys.path.insert(0, str(TOOL_DIR))
+SRC_DIR = TOOL_DIR / "src"
+RESOURCE_DIR = TOOL_DIR / "resources"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
 from generator import (
     ASCENDED_AFFIX_RECORDS,
@@ -52,13 +54,13 @@ class LicenseTests(unittest.TestCase):
 
 class SaveFormatTests(unittest.TestCase):
     def test_template_round_trip_is_byte_identical(self):
-        path = TOOL_DIR / "_template" / "player.gdc"
+        path = RESOURCE_DIR / "_template" / "player.gdc"
         original = path.read_bytes()
         save = CharacterSave.from_bytes(original)
         self.assertEqual(save.to_bytes(), original)
 
     def test_header_name_can_change_length(self):
-        save = CharacterSave.load(TOOL_DIR / "_template" / "player.gdc")
+        save = CharacterSave.load(RESOURCE_DIR / "_template" / "player.gdc")
         save.header.character_name = "\u6784\u7b51\u6d4b\u8bd5"
         loaded = CharacterSave.from_bytes(save.to_bytes())
         self.assertEqual(loaded.header.character_name, "\u6784\u7b51\u6d4b\u8bd5")
@@ -118,7 +120,7 @@ class GeneratorTests(unittest.TestCase):
             result = generate_save(
                 self._build(),
                 "UnitTestHero",
-                TOOL_DIR / "_template",
+                RESOURCE_DIR / "_template",
                 Path(temporary),
             )
             save = CharacterSave.load(result.player_file)
@@ -129,7 +131,7 @@ class GeneratorTests(unittest.TestCase):
                 save.block(3).payload.tail["weapon_sets"][0]["items"][1]["basename"],
                 "",
             )
-            expected_count = sum(1 for path in (TOOL_DIR / "_template").rglob("*") if path.is_file())
+            expected_count = sum(1 for path in (RESOURCE_DIR / "_template").rglob("*") if path.is_file())
             self.assertEqual(sum(1 for path in result.output_directory.rglob("*") if path.is_file()), expected_count)
 
     def test_reject_invalid_name(self):

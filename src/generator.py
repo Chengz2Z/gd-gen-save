@@ -10,11 +10,15 @@ from pathlib import Path
 import random
 import re
 import shutil
+import sys
 
 from grimtools import GrimToolsBuild
 from save_format import Block3Data, CharacterSave, SaveFormatError
 
-DATABASE_DIR = Path(__file__).resolve().parent / "database"
+if getattr(sys, "frozen", False):
+    DATABASE_DIR = Path(getattr(sys, "_MEIPASS")) / "database"
+else:
+    DATABASE_DIR = Path(__file__).resolve().parents[1] / "resources" / "database"
 DEVOTION_CONFIG_FILE = DATABASE_DIR / "devotion_config.json"
 DEVOTION_CONTROLLER_MAP_FILE = DATABASE_DIR / "devotion_controller_map.json"
 CRAFTING_BONUS_FILE = DATABASE_DIR / "crafting_bonus.json"
@@ -542,7 +546,7 @@ def generate_save(
     if output_directory.exists():
         if not overwrite:
             raise GenerationError(
-                f"输出目录已经存在：{output_directory}；使用 --force 可覆盖"
+                f"输出目录已经存在：{output_directory}"
             )
         shutil.rmtree(output_directory)
     output_root.mkdir(parents=True, exist_ok=True)

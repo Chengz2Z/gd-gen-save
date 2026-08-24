@@ -8,8 +8,9 @@ import unittest
 
 
 TOOL_DIR = Path(__file__).resolve().parents[1]
-if str(TOOL_DIR) not in sys.path:
-    sys.path.insert(0, str(TOOL_DIR))
+SRC_DIR = TOOL_DIR / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
 from i18n import LanguageManager
 

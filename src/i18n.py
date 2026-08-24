@@ -16,11 +16,13 @@ DEFAULT_LANGUAGE = "zh_CN"
 def _program_directory() -> Path:
     if getattr(sys, "frozen", False):
         return Path(sys.executable).resolve().parent
-    return Path(__file__).resolve().parent
+    return Path(__file__).resolve().parents[1] / "resources"
 
 
 def _bundled_directory() -> Path:
-    return Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
+    if getattr(sys, "frozen", False):
+        return Path(getattr(sys, "_MEIPASS"))
+    return Path(__file__).resolve().parents[1] / "resources"
 
 
 class LanguageManager:
