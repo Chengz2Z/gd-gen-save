@@ -12,7 +12,7 @@ import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
-from app_version import APP_VERSION
+from app_version import APP_VERSION, branded_free_window_title, branded_window_title
 from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_character_name, _load_crafting_bonus
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
@@ -35,17 +35,15 @@ TRANSLATED_SLOTS = (
 )
 APP_TITLE = ""
 APP_TITLE_AND_AUTHOR = ""
-FREE_APP_TITLE = ""
+APP_FREE_TITLE_AND_AUTHOR = ""
 SLOT_LABELS: dict[str, str] = {}
 
 
 def refresh_translated_constants() -> None:
-    global APP_TITLE, APP_TITLE_AND_AUTHOR, FREE_APP_TITLE
+    global APP_TITLE, APP_TITLE_AND_AUTHOR, APP_FREE_TITLE_AND_AUTHOR
     APP_TITLE = tr("app.title")
-    APP_TITLE_AND_AUTHOR = tr(
-        "app.title_author", title=APP_TITLE, version=APP_VERSION
-    )
-    FREE_APP_TITLE = tr("app.title_free", title=APP_TITLE, version=APP_VERSION)
+    APP_TITLE_AND_AUTHOR = branded_window_title(APP_TITLE)
+    APP_FREE_TITLE_AND_AUTHOR = branded_free_window_title(APP_TITLE)
     SLOT_LABELS.clear()
     SLOT_LABELS.update({slot: tr(f"slot.{slot}") for slot in TRANSLATED_SLOTS})
 
@@ -183,7 +181,7 @@ class SaveGeneratorApp:
 
         root.title(
             window_title
-            or (FREE_APP_TITLE if self.free_edition else APP_TITLE_AND_AUTHOR)
+            or (APP_FREE_TITLE_AND_AUTHOR if self.free_edition else APP_TITLE_AND_AUTHOR)
         )
         root.minsize(self.COLLAPSED_WIDTH, self.WINDOW_HEIGHT)
         root.protocol("WM_DELETE_WINDOW", self._close)
@@ -488,7 +486,7 @@ class SaveGeneratorApp:
 
     def _apply_translations(self) -> None:
         """Update widget text in place without recreating or flashing the window."""
-        self.root.title(FREE_APP_TITLE if self.free_edition else APP_TITLE_AND_AUTHOR)
+        self.root.title(APP_FREE_TITLE_AND_AUTHOR if self.free_edition else APP_TITLE_AND_AUTHOR)
         self.menu_bar.entryconfigure(0, label=tr("app.language"))
         language_names = dict(I18N.language_choices())
         for index, code in enumerate(self.language_codes):

@@ -41,7 +41,7 @@ python -m pip install -r packaging/requirements.txt
 ```
 
 - `licensed`（或不传参数）：生成 `artifacts\releases\GenerateSave-版本号\licensed\GenerateSave-版本号.exe`，启动时必须校验机器许可证。
-- `free`：生成 `artifacts\releases\GenerateSave-版本号\free\GenerateSave-Free-版本号.exe`，完全跳过许可证校验，窗口标题会标记“免授权版”。该版本一旦转发便可被任何人使用，应仅按需提供给可信人员。
+- `free`：生成 `artifacts\releases\GenerateSave-版本号\free\GenerateSave-Free-版本号.exe`，完全跳过许可证校验，窗口标题使用独立的 `Release by` 品牌标记。该版本一旦转发便可被任何人使用，应仅按需提供给可信人员。
 
 每个发布目录都包含 EXE 和 `languages` 目录。软件会优先读取 EXE 同目录下的外置 JSON 语言包，语言包缺项时回退到内置简体中文。可直接修改 JSON 文案或复制现有文件新增语言；`_meta.code` 必须唯一，`strings` 中的占位符（例如 `{path}`、`{version}`）应保留。界面顶部可选择语言并立即生效，切换时会保留当前输入和高级设置。也可在启动前设置 `GENERATESAVE_LANG` 环境变量临时指定语言代码。
 
