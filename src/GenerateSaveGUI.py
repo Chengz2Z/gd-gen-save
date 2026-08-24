@@ -367,7 +367,11 @@ class SaveGeneratorApp:
             "<Configure>",
             lambda e: canvas.configure(scrollregion=canvas.bbox("all")),
         )
-        canvas.create_window((0, 0), window=scroll_frame, anchor=tk.NW)
+        scroll_window = canvas.create_window((0, 0), window=scroll_frame, anchor=tk.NW)
+        canvas.bind(
+            "<Configure>",
+            lambda event: canvas.itemconfigure(scroll_window, width=event.width),
+        )
         canvas.configure(yscrollcommand=scrollbar_adv.set)
         canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar_adv.pack(side=tk.RIGHT, fill=tk.Y)
@@ -424,7 +428,7 @@ class SaveGeneratorApp:
             combo.grid(row=row, column=2, sticky=tk.EW, pady=2)
             self.slot_crafting_combos[slot] = combo
 
-        scroll_frame.columnconfigure(1, weight=1)
+        scroll_frame.columnconfigure(1, weight=0)
         scroll_frame.columnconfigure(2, weight=1)
 
 
@@ -661,14 +665,18 @@ class SaveGeneratorApp:
         if self.advanced_panel_visible:
             self.advanced_panel.place_forget()
             self.advanced_panel_visible = False
+            self.root.minsize(self.COLLAPSED_WIDTH, self.WINDOW_HEIGHT)
             self.root.geometry(f"{self.COLLAPSED_WIDTH}x{self.WINDOW_HEIGHT}")
         else:
+            self.root.minsize(self.EXPANDED_WIDTH, self.WINDOW_HEIGHT)
             self.root.geometry(f"{self.EXPANDED_WIDTH}x{self.WINDOW_HEIGHT}")
             self.advanced_panel.place(
                 x=self.COLLAPSED_WIDTH,
                 y=20,
-                width=self.EXPANDED_WIDTH - self.COLLAPSED_WIDTH - 10,
-                height=self.CONTENT_HEIGHT - 40,
+                relwidth=1,
+                width=-(self.COLLAPSED_WIDTH + 10),
+                relheight=1,
+                height=-40,
             )
             self.advanced_panel_visible = True
 
