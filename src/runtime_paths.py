@@ -16,3 +16,17 @@ def program_directory() -> Path:
 def gui_config_path() -> Path:
     """Return the editable GUI configuration path beside the packaged program."""
     return program_directory() / "config" / "config.json"
+
+
+def data_directory() -> Path:
+    """Return editable application data outside the EXE."""
+    if getattr(sys, "frozen", False):
+        return program_directory() / "data"
+    return Path(__file__).resolve().parents[1] / "resources"
+
+
+def database_directory() -> Path:
+    """Return the database JSON directory for source or packaged runs."""
+    if getattr(sys, "frozen", False):
+        return data_directory()
+    return data_directory() / "database"

@@ -18,7 +18,7 @@ from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
 from license_manager import LicenseError, install_license, validate_license
 from i18n import LanguageManager
-from runtime_paths import gui_config_path, program_directory
+from runtime_paths import data_directory, gui_config_path, program_directory
 
 
 CONFIG_FILE = gui_config_path()
@@ -129,14 +129,6 @@ def ensure_activated(root: tk.Tk) -> bool:
     dialog.geometry(f"+{x}+{y}")
     root.wait_window(dialog)
     return accepted
-
-
-def resource_directory() -> Path:
-    """Directory containing bundled read-only resources."""
-    bundled = getattr(sys, "_MEIPASS", None)
-    if bundled:
-        return Path(bundled)
-    return Path(__file__).resolve().parents[1] / "resources"
 
 
 def writable_directory() -> Path:
@@ -827,7 +819,7 @@ class SaveGeneratorApp:
         template_input = self.template_var.get().strip()
         # 如果输入框显示占位符或为空，使用默认模板
         if not template_input or self.template_placeholder_active:
-            template_path = resource_directory() / "_template"
+            template_path = data_directory() / "_template"
             # 恢复占位符显示
             self._show_template_placeholder()
         else:
@@ -914,7 +906,7 @@ class SaveGeneratorApp:
         self.last_output = None
         self._clear_log()
         self._set_running(True)
-        is_default_template = (template_path == resource_directory() / "_template")
+        is_default_template = (template_path == data_directory() / "_template")
         gender = self.gender_var.get()
         keep_materials = self.keep_materials_var.get()
         keep_iron = self.keep_iron_var.get()
@@ -1037,7 +1029,7 @@ class SaveGeneratorApp:
 
 def main(*, require_license: bool = True, window_title: str = APP_TITLE_AND_AUTHOR) -> int:
     if "--self-test" in sys.argv:
-        template = resource_directory() / "_template"
+        template = data_directory() / "_template"
         player_file = template / "player.gdc"
         if not player_file.is_file():
             return 2

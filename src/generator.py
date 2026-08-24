@@ -1,4 +1,4 @@
-"""Apply a GrimTools build to the bundled ``_template`` save template."""
+"""Apply a GrimTools build using editable external database files."""
 
 from __future__ import annotations
 
@@ -10,15 +10,12 @@ from pathlib import Path
 import random
 import re
 import shutil
-import sys
 
 from grimtools import GrimToolsBuild
+from runtime_paths import database_directory
 from save_format import Block3Data, CharacterSave, SaveFormatError
 
-if getattr(sys, "frozen", False):
-    DATABASE_DIR = Path(getattr(sys, "_MEIPASS")) / "database"
-else:
-    DATABASE_DIR = Path(__file__).resolve().parents[1] / "resources" / "database"
+DATABASE_DIR = database_directory()
 DEVOTION_CONFIG_FILE = DATABASE_DIR / "devotion_config.json"
 DEVOTION_CONTROLLER_MAP_FILE = DATABASE_DIR / "devotion_controller_map.json"
 CRAFTING_BONUS_FILE = DATABASE_DIR / "crafting_bonus.json"

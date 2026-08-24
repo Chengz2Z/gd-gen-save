@@ -26,12 +26,11 @@ set "RELEASE_DIR=artifacts\releases\GenerateSave-%APP_VERSION%\%MODE%"
 set "SPEC_DIR=artifacts\spec"
 if not exist "%RELEASE_DIR%" mkdir "%RELEASE_DIR%"
 if not exist "%RELEASE_DIR%\config" mkdir "%RELEASE_DIR%\config"
+if not exist "%RELEASE_DIR%\data" mkdir "%RELEASE_DIR%\data"
 if not exist "%SPEC_DIR%" mkdir "%SPEC_DIR%"
 
 python -m PyInstaller --noconfirm --clean --onefile --windowed ^
   --name "%APP_NAME%" ^
-  --add-data "%~dp0resources\_template;_template" ^
-  --add-data "%~dp0resources\database;database" ^
   --add-data "%~dp0resources\languages;languages" ^
   --distpath "%RELEASE_DIR%" ^
   --workpath "artifacts\build\%MODE%" ^
@@ -47,6 +46,20 @@ if errorlevel 1 (
 xcopy /E /I /Y "resources\languages" "%RELEASE_DIR%\languages" >nul
 if errorlevel 1 (
   echo Failed to copy language packs.
+  exit /b 1
+)
+
+xcopy /E /I /Y "resources\_template" "%RELEASE_DIR%\data\_template" >nul
+if errorlevel 1 (
+  echo Failed to copy the editable save template.
+  exit /b 1
+)
+
+if exist "%RELEASE_DIR%\data\database" rmdir /S /Q "%RELEASE_DIR%\data\database"
+if exist "%RELEASE_DIR%\data\all_devotion_skills.json" del /Q "%RELEASE_DIR%\data\all_devotion_skills.json"
+copy /Y "resources\database\*.json" "%RELEASE_DIR%\data\" >nul
+if errorlevel 1 (
+  echo Failed to copy the editable database.
   exit /b 1
 )
 
