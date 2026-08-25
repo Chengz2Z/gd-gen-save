@@ -5,7 +5,7 @@
     "version": 1
   },
   "strings": {
-    "app.title": "Grim Dawn 存档生成器",
+    "app.title": "GrimDawn存档生成器",
     "app.language": "Language",
     "app.language_restart": "语言已切换。",
     "license.title": "软件离线授权",

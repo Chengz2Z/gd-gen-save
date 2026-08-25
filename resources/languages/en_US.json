@@ -5,7 +5,7 @@
     "version": 1
   },
   "strings": {
-    "app.title": "Grim Dawn Generator Save",
+    "app.title": "GrimDawnGenerateSave",
     "app.language": "Language",
     "app.language_restart": "Language changed.",
     "license.title": "Offline License",
