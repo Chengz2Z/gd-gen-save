@@ -8,21 +8,14 @@ if not defined APP_VERSION (
   exit /b 1
 )
 
-set "MODE=%~1"
-if "%MODE%"=="" set "MODE=licensed"
-
-if /i "%MODE%"=="licensed" (
-  set "ENTRY=src\GenerateSaveGUI.py"
-  set "APP_NAME=GenerateSave-%APP_VERSION%"
-) else if /i "%MODE%"=="free" (
-  set "ENTRY=src\GenerateSaveGUIFree.py"
-  set "APP_NAME=GenerateSave-Free-%APP_VERSION%"
-) else (
-  echo Usage: build_exe.bat [licensed^|free]
+if not "%~1"=="" (
+  echo Usage: build_exe.bat
   exit /b 2
 )
 
-set "RELEASE_DIR=artifacts\releases\GenerateSave-%APP_VERSION%\%MODE%"
+set "ENTRY=src\GenerateSaveGUI.py"
+set "APP_NAME=GenerateSave-%APP_VERSION%"
+set "RELEASE_DIR=artifacts\releases\GenerateSave-%APP_VERSION%"
 set "SPEC_DIR=artifacts\spec"
 if not exist "%RELEASE_DIR%" mkdir "%RELEASE_DIR%"
 if not exist "%RELEASE_DIR%\config" mkdir "%RELEASE_DIR%\config"
@@ -33,13 +26,13 @@ python -m PyInstaller --noconfirm --clean --onefile --windowed ^
   --name "%APP_NAME%" ^
   --add-data "%~dp0resources\languages;languages" ^
   --distpath "%RELEASE_DIR%" ^
-  --workpath "artifacts\build\%MODE%" ^
+  --workpath "artifacts\build" ^
   --specpath "%SPEC_DIR%" ^
   "%ENTRY%"
 
 if errorlevel 1 (
   echo.
-  echo %MODE% EXE build failed.
+  echo EXE build failed.
   exit /b 1
 )
 
@@ -64,5 +57,5 @@ if errorlevel 1 (
 )
 
 echo.
-echo %MODE% release created: %~dp0%RELEASE_DIR%
+echo Release created: %~dp0%RELEASE_DIR%
 endlocal

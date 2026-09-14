@@ -1,2 +1,1 @@
-cryptography>=46,<50
 pyinstaller>=6,<7

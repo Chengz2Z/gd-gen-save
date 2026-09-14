@@ -4,7 +4,6 @@
 # PyInstaller build products and local release binaries
 /build/
 /dist/
-/licenses/
 /artifacts/
 *.spec
 

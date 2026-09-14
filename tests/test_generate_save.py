@@ -22,36 +22,6 @@ from generator import (
 )
 from grimtools import GrimToolsBuild, extract_build_id
 from save_format import CharacterSave
-from license_manager import (
-    LicenseError,
-    default_license_path,
-    normalize_machine_code,
-    validate_license,
-)
-
-
-class LicenseTests(unittest.TestCase):
-    def test_normalizes_machine_code(self):
-        self.assertEqual(
-            normalize_machine_code("01234567 89ab-cdef 0123456789abcdef"),
-            "0123-4567-89AB-CDEF-0123-4567-89AB-CDEF",
-        )
-
-    def test_rejects_invalid_machine_code(self):
-        with self.assertRaises(LicenseError):
-            normalize_machine_code("not-a-machine-code")
-
-    def test_missing_license_is_reported_without_creating_one(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            path = Path(temporary) / "missing-license.dat"
-            status = validate_license(path)
-            self.assertFalse(status.valid)
-            self.assertFalse(path.exists())
-
-    def test_license_is_kept_outside_the_program_directory(self):
-        self.assertNotEqual(default_license_path().parent, TOOL_DIR)
-
-
 class SaveFormatTests(unittest.TestCase):
     def test_template_round_trip_is_byte_identical(self):
         path = RESOURCE_DIR / "_template" / "player.gdc"

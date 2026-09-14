@@ -12,11 +12,10 @@ import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
-from app_version import APP_VERSION, branded_free_window_title, branded_window_title
+from app_version import APP_VERSION, branded_window_title
 from generator import EQUIPMENT_SLOTS, GenerationError, generate_save, validate_character_name, _load_crafting_bonus
 from grimtools import GrimToolsError, fetch_build
 from save_format import CharacterSave, SaveFormatError
-from license_manager import LicenseError, install_license, validate_license
 from i18n import LanguageManager
 from runtime_paths import data_directory, gui_config_path, program_directory
 
@@ -36,15 +35,13 @@ TRANSLATED_SLOTS = (
 )
 APP_TITLE = ""
 APP_TITLE_AND_AUTHOR = ""
-APP_FREE_TITLE_AND_AUTHOR = ""
 SLOT_LABELS: dict[str, str] = {}
 
 
 def refresh_translated_constants() -> None:
-    global APP_TITLE, APP_TITLE_AND_AUTHOR, APP_FREE_TITLE_AND_AUTHOR
+    global APP_TITLE, APP_TITLE_AND_AUTHOR
     APP_TITLE = tr("app.title")
     APP_TITLE_AND_AUTHOR = branded_window_title(APP_TITLE)
-    APP_FREE_TITLE_AND_AUTHOR = branded_free_window_title(APP_TITLE)
     SLOT_LABELS.clear()
     SLOT_LABELS.update({slot: tr(f"slot.{slot}") for slot in TRANSLATED_SLOTS})
 
@@ -58,78 +55,6 @@ SLOT_ORDER = [
     "head", "chest", "shoulders", "hands", "legs", "feet", "waist",
     "relic", "medal",
 ]
-
-def ensure_activated(root: tk.Tk) -> bool:
-    """Validate the local license or let the user import an author-issued one."""
-    status = validate_license()
-    if status.valid:
-        return True
-
-    accepted = False
-    dialog = tk.Toplevel(root)
-    dialog.title(tr("license.title"))
-    dialog.resizable(False, False)
-    dialog.grab_set()
-
-    frame = ttk.Frame(dialog, padding=20)
-    frame.pack(fill=tk.BOTH, expand=True)
-    ttk.Label(
-        frame,
-        text=tr("license.instructions"),
-        justify=tk.LEFT,
-    ).grid(row=0, column=0, columnspan=2, sticky=tk.W, pady=(0, 12))
-    ttk.Label(frame, text=tr("license.status", reason=I18N.message(status.reason)), foreground="#9A3412").grid(
-        row=1, column=0, columnspan=2, sticky=tk.W, pady=(0, 10)
-    )
-    code_var = tk.StringVar(value=status.machine_code)
-    code_entry = ttk.Entry(frame, textvariable=code_var, width=43, state="readonly")
-    code_entry.grid(row=2, column=0, sticky=tk.EW)
-
-    def copy_code() -> None:
-        root.clipboard_clear()
-        root.clipboard_append(status.machine_code)
-        root.update()
-        copy_button.configure(text=tr("license.copied"))
-
-    copy_button = ttk.Button(frame, text=tr("license.copy"), command=copy_code)
-    copy_button.grid(row=2, column=1, padx=(8, 0))
-
-    def import_selected() -> None:
-        nonlocal accepted
-        selected = filedialog.askopenfilename(
-            title=tr("license.select_title"),
-            filetypes=((tr("license.file_type"), "*.lic"), (tr("common.all_files"), "*.*")),
-            parent=dialog,
-        )
-        if not selected:
-            return
-        try:
-            installed = install_license(Path(selected))
-        except (LicenseError, OSError) as exc:
-            messagebox.showerror(tr("license.import_failed"), I18N.message(exc), parent=dialog)
-            return
-        accepted = True
-        messagebox.showinfo(
-            tr("license.success_title"),
-            tr("license.success", machine_code=installed.machine_code),
-            parent=dialog,
-        )
-        dialog.destroy()
-
-    buttons = ttk.Frame(frame)
-    buttons.grid(row=3, column=0, columnspan=2, sticky=tk.E, pady=(18, 0))
-    ttk.Button(buttons, text=tr("common.exit"), command=dialog.destroy).pack(side=tk.RIGHT)
-    ttk.Button(buttons, text=tr("license.import"), command=import_selected).pack(
-        side=tk.RIGHT, padx=(0, 8)
-    )
-    dialog.protocol("WM_DELETE_WINDOW", dialog.destroy)
-    dialog.update_idletasks()
-    x = (dialog.winfo_screenwidth() - dialog.winfo_reqwidth()) // 2
-    y = (dialog.winfo_screenheight() - dialog.winfo_reqheight()) // 2
-    dialog.geometry(f"+{x}+{y}")
-    root.wait_window(dialog)
-    return accepted
-
 
 def writable_directory() -> Path:
     """Directory next to the executable, used for generated characters."""
@@ -146,11 +71,8 @@ class SaveGeneratorApp:
         self,
         root: tk.Tk,
         window_title: str | None = None,
-        *,
-        free_edition: bool = False,
     ):
         self.root = root
-        self.free_edition = free_edition
         self.disposed = False
         self._after_id: str | None = None
         self.events: queue.Queue[tuple[str, object]] = queue.Queue()
@@ -170,10 +92,7 @@ class SaveGeneratorApp:
         self.template_placeholder_active = False
         self.advanced_panel_visible = False
 
-        root.title(
-            window_title
-            or (APP_FREE_TITLE_AND_AUTHOR if self.free_edition else APP_TITLE_AND_AUTHOR)
-        )
+        root.title(window_title or APP_TITLE_AND_AUTHOR)
         root.minsize(self.COLLAPSED_WIDTH, self.WINDOW_HEIGHT)
         root.protocol("WM_DELETE_WINDOW", self._close)
 
@@ -341,17 +260,6 @@ class SaveGeneratorApp:
         self.log.grid(row=0, column=0, sticky=tk.NSEW)
         scrollbar.grid(row=0, column=1, sticky=tk.NS)
 
-        self.distribution_notice = ttk.Label(
-            frame,
-            text=tr("notice.distribution"),
-            foreground="#555555",
-            justify=tk.LEFT,
-            wraplength=600,
-        )
-        self.distribution_notice.grid(
-            row=8, column=0, columnspan=3, sticky=tk.W, pady=(10, 0)
-        )
-
         # 右侧高级面板（初始隐藏）
         self.advanced_panel = ttk.LabelFrame(
             self.main_container, text=tr("advanced.title"), padding=10
@@ -481,7 +389,7 @@ class SaveGeneratorApp:
 
     def _apply_translations(self) -> None:
         """Update widget text in place without recreating or flashing the window."""
-        self.root.title(APP_FREE_TITLE_AND_AUTHOR if self.free_edition else APP_TITLE_AND_AUTHOR)
+        self.root.title(APP_TITLE_AND_AUTHOR)
         self.menu_bar.entryconfigure(0, label=tr("app.language"))
         language_names = dict(I18N.language_choices())
         for index, code in enumerate(self.language_codes):
@@ -503,7 +411,6 @@ class SaveGeneratorApp:
             (self.generate_button, "action.generate"),
             (self.open_button, "action.open_output"),
             (self.log_frame, "log.title"),
-            (self.distribution_notice, "notice.distribution"),
             (self.advanced_panel, "advanced.title"),
             (self.advanced_slot_header, "advanced.slot"),
             (self.advanced_seed_header, "advanced.seed"),
@@ -1035,7 +942,7 @@ class SaveGeneratorApp:
         self.root.destroy()
 
 
-def main(*, require_license: bool = True, window_title: str = APP_TITLE_AND_AUTHOR) -> int:
+def main(*, window_title: str = APP_TITLE_AND_AUTHOR) -> int:
     if "--self-test" in sys.argv:
         template = data_directory() / "_template"
         player_file = template / "player.gdc"
@@ -1047,15 +954,7 @@ def main(*, require_license: bool = True, window_title: str = APP_TITLE_AND_AUTH
         return 0
 
     root = tk.Tk()
-    root.withdraw()
-    if require_license and not ensure_activated(root):
-        root.destroy()
-        return 1
-    app = SaveGeneratorApp(
-        root,
-        window_title=window_title,
-        free_edition=not require_license,
-    )
+    app = SaveGeneratorApp(root, window_title=window_title)
     setattr(root, "_save_generator_app", app)
     root.mainloop()
     return 0

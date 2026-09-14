@@ -15,9 +15,7 @@ if str(SRC_DIR) not in sys.path:
 from i18n import LanguageManager
 from app_version import (
     APP_AUTHOR,
-    APP_FREE_AUTHOR,
     APP_VERSION,
-    branded_free_window_title,
     branded_window_title,
 )
 
@@ -28,16 +26,10 @@ class LanguagePackTests(unittest.TestCase):
         for code, pack in manager.packs.items():
             with self.subTest(language=code):
                 self.assertNotIn(APP_AUTHOR, json.dumps(pack, ensure_ascii=False))
-                self.assertNotIn(APP_FREE_AUTHOR, json.dumps(pack, ensure_ascii=False))
                 self.assertNotIn("app.title_author", pack["strings"])
-                self.assertNotIn("app.title_free", pack["strings"])
         self.assertEqual(
             branded_window_title("Product"),
             f"Product {APP_VERSION} by {APP_AUTHOR}",
-        )
-        self.assertEqual(
-            branded_free_window_title("Product"),
-            f"Product {APP_VERSION} Release by {APP_FREE_AUTHOR}",
         )
 
     def test_all_packs_have_the_default_keys(self):
