@@ -1,6 +1,6 @@
 """Immutable application identity used by the GUI and packaging script."""
 
-APP_VERSION = "v1.0"
+APP_VERSION = "v1.1"
 APP_AUTHOR = "Chengz2Z"
 
 

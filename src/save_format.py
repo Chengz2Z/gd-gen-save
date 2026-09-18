@@ -924,7 +924,7 @@ def _read_block_payload(
         10: _read_block10,
         12: _read_block12,
         13: _read_block13,
-        14: _read_block14,
+        14: lambda s, c: _read_block14(s, c, payload_end),
         15: _read_block15,
         16: _read_block16,
         17: _read_block17,
@@ -1171,7 +1171,7 @@ def _write_skill_set(stream, cipher, value):
     _write_string(stream, cipher, value["primary"]); _write_string(stream, cipher, value["secondary"]); _write_bool(stream, cipher, value["active"])
 
 
-def _read_block14(stream, cipher):
+def _read_block14(stream, cipher, payload_end: int):
     version = _read_i32(stream, cipher)
     value = {
         "version": version, "equipment_selection": _read_bool(stream, cipher),
@@ -1180,8 +1180,12 @@ def _read_block14(stream, cipher):
     }
     if version >= 7:
         value["unknown2"] = _read_i32(stream, cipher); value["unknown3"] = _read_i32(stream, cipher); value["unknown4"] = _read_i32(stream, cipher)
-    count = 36 if version == 4 else 46
-    value["hotslots"] = [_read_hotslot(stream, cipher) for _ in range(count)]
+    # camera_distance + optional unknown1; hotslot count varies by save (46, 94, ...)
+    trailer = 4 + (4 if version >= 6 else 0)
+    hotslots = []
+    while payload_end - stream.tell() > trailer:
+        hotslots.append(_read_hotslot(stream, cipher))
+    value["hotslots"] = hotslots
     value["camera_distance"] = _read_f32(stream, cipher)
     if version >= 6:
         value["unknown1"] = _read_i32(stream, cipher)
